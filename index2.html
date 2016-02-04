@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Maker</title>
+  <link href = 'http://fonts.googleapis.com/css?family=Roboto:400,500,300' rel = 'stylesheet' type = 'text/css'>
+  <link href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel = "stylesheet">
+  <link rel = "stylesheet" href = "css/normalize.css">
+  <link rel = "stylesheet" href = "css/style2.css">
+  <link rel = "prev" href = "./index1.html">
+</head>
+
+<body>
+  <nav class = "top-navigation">
+    <div class = "content1">
+      <p><a href = "./index1.html">Maker</a></p>
+    </div>
+  </nav>
+
+  <header class = "masthead">
+    <p class = "masthead-intro">Maker</p>
+    <h1 class = "masthead-heading">The Decision Making Tool for Capital Investments
+    </h1>
+  </header>
+  
+  <section class = "section">
+    <h1>Assumptions</h1>
+        <div id = "keyfactors">
+        <h2>Key Factors</h2>
+        <div id = "explanation1">
+        <h3>Tips</h3>
+        <p>
+          Initial Invetment - An initial purchase amount of new capital investments.<br><br>
+          Cost of Capital - How much (8%, 10% etc...) do creditors and investors expect from new investments? (eg. after-tax interest rates on borrowings/investors' expected return)<br><br>
+          Investment Term - How long do new capital investments generate economic benefits?
+        </p>
+        </div>
+          <form method = "POST" action = "js/script.js" name = "keyfactors">
+            <fieldset name = "keyfactors">
+              <p>
+                <label for = "initial">Initial Investment (in USD) </lable><input id = "initial" type = "text" class = "money" name = "Initial Investment">
+              </p>
+              <p>
+                <label for = "costOfCapital">Cost of Capital (%) </lable><input id = "costOfCapital" type = "text" name = "Cost of Capital">
+              </p>
+              <p>
+                <label for = "investmentTerm">Investment Term (in years) </label><input id = "investmentTerm" type = "text" name = "Investment Term">
+              </p>
+              <p>
+                <label for = "corporateTaxRate"> Corporate Tax Rate (%) </lable><input id = "corporateTaxRate" type = "text" name = "Corporate Tax Rate">
+              </p>
+              <p>
+                <label for = "methodOfDepreciation"> Method of Depreciation </label><input id = "methodOfDepreciation" type = "radio" name = "Method of Depreciation" value = "Straight-Line" checked>Straight-Line
+              </p>
+              <p>Right now, Straight-Line Depreciation is the only method used for the app.
+              </p>
+            </fieldset>
+          </form>
+        </div>
+      
+      <div id = "cashflows">
+      <h2>Annual Cash Flows - Before Tax</h2>
+      <div id = "explanation2">
+        <h3>Tips</h3>
+        <p>
+          Sales/Cost - How much do sales and cost increase annually from new capital investments?<br><br>
+          Depreciation - Annual depreciation expense from new capital investments<br><br>
+          Residual Value - Cash value on disposal<br><br>
+          Profit/Loss = Initial Amount - (Accumulated Depreciation + Residual Value)<br>
+          Profit +, Loss -
+        </p>
+      </div>
+        <form method = "POST" action = "js/script.js" name = "cashflows">
+          <fieldset name = "Cash Flows Before Tax">
+            <p>
+              <label for = "sales">Sales (in USD) </lable><input id = "sales" type = "text" class = "money" name = "Sales">
+            </p>
+            <p>
+              <label for = "cost">Cost (in USD) </label><input id = "cost" type = "text" class = "money" name = "Cost">
+            </p>
+            <p>
+              <label for = "depreciation">Depreciation (in USD) </label><input id = "depreciation" type = "text" class = "money" name = "Depreciation">
+            </p>
+            <p>
+              <label for = "residualValue">Residual Value (in USD) </lable><input id = "residualValue" type = "text" class = "money" name = "Residual Value">
+            </p>
+            <p>
+              <label for = "profitLoss">Profit/Loss on Assets Sales (in USD) </label><input id = "profitLoss" type = "text" class = "money" name = "Profit Loss">
+            </p>
+          </fieldset>
+        </form>
+      </div>
+  </section>
+
+  <section class = "section">
+    <div>
+      <button class = "button" id = "calc">Calculation</button>
+    </div>
+  </section>
+
+  <section class = "section">
+    <div id = "calculation">
+    <h1>Calculation</h1>
+      <div id = "explanation3">
+        <h3>Tips</h3>
+        <p>
+          Net Present Value = Initial amount - Discounted Cash Flows<br><br>
+          Profitabiliy Index = Discounted Cash Flows / Initial Amount
+        </p>
+      </div>
+      <form name = "calculation">
+        <fieldset name = "Calculation">
+          <p>
+            <label for = "netPresentValue">Net Present Value </label><input id = "netPresentValue" type = "text" class = "money" name = "Net Present Value">
+          </p>
+          <p>
+            <label for = "profitabilityIndex">Profitability Index </label><input id = "profitabilityIndex" type = "text" name = "Profitability Index">
+          </p>
+        </fieldset>
+      </form>
+    </div>
+  </section>
+
+  <section class = "section">
+    <h1>Decision Maker</h1>
+    <div class = "boxResult">
+      <div class = "boxResult1">
+        <div class = "result">Result</div>
+        <div class = "go">Go</div>
+        <div class = "nogo">No Go</div>
+      </div>
+      <div class = "boxResult2">
+        <div class = "comments">Comments</div>
+        <div class = "go-comments">
+          <h2>Go</h2>
+          <p>Your capital investment looks great. Or Your capital investment doesn't look good. Please conduct further investigation and see whether the investment helps your growth and productivity.</p>
+        </div>
+        <div class = "nogo-comments">
+          <h2>No Go</h2>
+          <p>Your capital investment looks great. Or Your capital investment doesn't look good. Please conduct further investigation and see whether the investment helps your growth and productivity.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class = "content-footer">
+    <p>Say hi to me on GitHub!</p>
+    <ul class = "social">
+      <li>
+        <i class = "fa fa-github"></i>
+        <a href = "https://github.com/tadashi0924">GitHub</a>
+      </li>
+    </ul>
+    <p>Cover Image via Unsplash <a href = "http://unsplash.com">Unsplash</a>
+    </p>
+  </footer>
+  
+  <script src = "https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src = "js/script.js"></script>
+  <script src = "js/script_hover.js"></script>
+
+</body>
+
+</html>
