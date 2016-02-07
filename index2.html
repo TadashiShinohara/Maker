@@ -68,7 +68,7 @@
           Depreciation - Annual depreciation expense from new capital investments<br><br>
           Residual Value - Cash value on disposal<br><br>
           Profit/Loss = Initial Amount - (Accumulated Depreciation + Residual Value)<br>
-          Profit +, Loss -
+          Profit -(Cash Outflow), Loss +(Cash Inflow)
         </p>
       </div>
         <form method = "POST" action = "js/script.js" name = "cashflows">
@@ -101,7 +101,7 @@
 
   <section class = "section">
     <div id = "calculation">
-    <h1>Calculation</h1>
+    <h1>Calculation Results</h1>
       <div id = "explanation3">
         <h3>Tips</h3>
         <p>
@@ -112,10 +112,13 @@
       <form name = "calculation">
         <fieldset name = "Calculation">
           <p>
-            <label for = "netPresentValue">Net Present Value </label><input id = "netPresentValue" type = "text" class = "money" name = "Net Present Value">
+            <label for = "netPresentValue">Net Present Value (in USD) </label><input id = "netPresentValue" type = "text" class = "money" name = "Net Present Value">
           </p>
           <p>
             <label for = "profitabilityIndex">Profitability Index </label><input id = "profitabilityIndex" type = "text" name = "Profitability Index">
+          </p>
+          <p>
+            <label for = "IIR">Internal Rate of Return (%) </label><input id = "IIR" type = "text" name = "Internal Rate of Return">
           </p>
         </fieldset>
       </form>
@@ -158,7 +161,6 @@
   
   <script src = "https://code.jquery.com/jquery-latest.min.js"></script>
   <script src = "js/script.js"></script>
-  <script src = "js/script_hover.js"></script>
 
 </body>
 
