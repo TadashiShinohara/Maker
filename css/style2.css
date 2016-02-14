@@ -95,6 +95,32 @@ input{
   letter-spacing: 0.03em;
 }
 
+#industry_return{
+  position: absolute;
+  left: 600px;
+  top: 390px;
+  display: none;
+  padding: 10px;
+  width: 850px;
+  height: 300px;
+  font-size: 12px;
+}
+
+#industry_return table.style{
+  width: 800px;
+}
+
+#industry_return table.style th{
+  text-align: center;
+}
+
+
+#industry_return table.style tr td{
+  width: 185px;
+  text-align: center;
+}
+
+
 #explanation1{
   position: absolute;
   left: 800px;

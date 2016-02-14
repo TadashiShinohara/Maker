@@ -23,14 +23,37 @@
     <h1 class = "masthead-heading">The Decision Making Tool for Capital Investments
     </h1>
   </header>
+
+  <section class = "section">
+    <div id = "industry_return">
+      <h4>Expected Return by Industries<sup>*</sup></h4>
+      <table class = "style">
+        <tr>
+          <th>Consuer Non-Durables</th><th>Consuer Durables</th><th>Manufacturing</th><th>Energy</th><th>Technology</th>
+        </tr>
+        <tr>
+          <td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <th>Telecom</th><th>Retail</th><th>Healthcare</th><th>Utilities</th><th>Other</th>
+        </tr>
+        <tr>
+          <td></td><td></td><td></td><td></td><td></td>
+        </tr>
+
+      </table>
+      <p><sup>*</sup>2005 to 2015 annual average</p>
+    </div>
+
+  </section>
   
   <section class = "section">
     <h1>Assumptions</h1>
         <div id = "keyfactors">
         <h2>Key Factors</h2>
         <div id = "explanation1">
-        <h3>Tips</h3>
-        <p>
+          <h3>Tips</h3>
+          <p>
           Initial Invetment - An initial purchase amount of new capital investments.<br><br>
           Cost of Capital - How much (8%, 10% etc...) do creditors and investors expect from new investments? (eg. after-tax interest rates on borrowings/investors' expected return)<br><br>
           Investment Term - How long do new capital investments generate economic benefits?
@@ -39,7 +62,7 @@
           <form method = "POST" action = "js/script.js" name = "keyfactors">
             <fieldset name = "keyfactors">
               <p>
-                <label for = "initial">Initial Investment (in USD) </lable><input id = "initial" type = "text" class = "money" name = "Initial Investment">
+                <label for = "initial">Initial Investment (in USD) </lable><input id = "initial" type = "text" name = "Initial Investment">
               </p>
               <p>
                 <label for = "costOfCapital">Cost of Capital (%) </lable><input id = "costOfCapital" type = "text" name = "Cost of Capital">
@@ -74,19 +97,19 @@
         <form method = "POST" action = "js/script.js" name = "cashflows">
           <fieldset name = "Cash Flows Before Tax">
             <p>
-              <label for = "sales">Sales (in USD) </lable><input id = "sales" type = "text" class = "money" name = "Sales">
+              <label for = "sales">Sales (in USD) </lable><input id = "sales" type = "text" class = "exp2" name = "Sales">
             </p>
             <p>
-              <label for = "cost">Cost (in USD) </label><input id = "cost" type = "text" class = "money" name = "Cost">
+              <label for = "cost">Cost (in USD) </label><input id = "cost" type = "text" class = "exp2" name = "Cost">
             </p>
             <p>
-              <label for = "depreciation">Depreciation (in USD) </label><input id = "depreciation" type = "text" class = "money" name = "Depreciation">
+              <label for = "depreciation">Depreciation (in USD) </label><input id = "depreciation" type = "text" class = "exp2" name = "Depreciation">
             </p>
             <p>
-              <label for = "residualValue">Residual Value (in USD) </lable><input id = "residualValue" type = "text" class = "money" name = "Residual Value">
+              <label for = "residualValue">Residual Value (in USD) </lable><input id = "residualValue" type = "text" class = "exp2" name = "Residual Value">
             </p>
             <p>
-              <label for = "profitLoss">Profit/Loss on Assets Sales (in USD) </label><input id = "profitLoss" type = "text" class = "money" name = "Profit Loss">
+              <label for = "profitLoss">Profit/Loss on Assets Sales (in USD) </label><input id = "profitLoss" type = "text" class = "exp2" name = "Profit Loss">
             </p>
           </fieldset>
         </form>
@@ -159,7 +182,7 @@
     </p>
   </footer>
   
-  <script src = "https://code.jquery.com/jquery-latest.min.js"></script>
+  <!--<script src = "https://code.jquery.com/jquery-latest.min.js"></script>-->
   <script src = "js/script.js"></script>
 
 </body>
