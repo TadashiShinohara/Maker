@@ -95,6 +95,7 @@ input{
   letter-spacing: 0.03em;
 }
 
+
 #industry_return{
   position: absolute;
   left: 600px;
@@ -125,34 +126,47 @@ input{
   position: absolute;
   left: 800px;
   top: 560px;
-  display: none;
   padding: 10px;
   width: 400px;
   height: 454.5px;
   text-align: left;
+  font-size: 0.9em;
 }
 
 #explanation2{
   position: absolute;
   left: 800px;
   top: 1020px;
-  display: none;
   padding: 10px;
   width: 400px;
   height: 454.5px;
   text-align: left;
+  font-size: 0.9em;
 }
 
 #explanation3{
   position: absolute;
   left: 800px;
   top: 1600px;
-  display: none;
   padding: 10px;
   width: 400px;
   height: 454.5px;
   text-align: left;
+  font-size: 0.9em;
 }
+
+#errorDiv{
+  position: absolute;
+  left: 400px;
+  top: 1418px;
+  padding: 10px;
+  width: 800px;
+  height: 454.5px;
+  text-align: left;
+  font-size: 0.9em;
+  display: none;
+}
+
 
 .boxResult:after{
   content: "";
