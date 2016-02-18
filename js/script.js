@@ -4,23 +4,42 @@ function run(){
 
 		document.getElementById('calc').onclick = function(){
 
+			// Value reset for re-calculation
+			document.forms['calculation'].elements['Net Present Value'].value = "";
+			document.forms['calculation'].elements['Profitability Index'].value = "";
+			document.forms['calculation'].elements['Internal Rate of Return'].value = "";
+
+
+			// Hide the error message first for re-calculation
+			hide(document.getElementById('errorDiv'));
+			
+			// Reset the comments for re-calculation
+			show(document.getElementsByClassName('result')[0]);
+			show(document.getElementsByClassName('comments')[0]);
+			hide(document.getElementsByClassName('go')[0]);
+			hide(document.getElementsByClassName('go-comments')[0]);
+			hide(document.getElementsByClassName('nogo')[0]);
+			hide(document.getElementsByClassName('nogo-comments')[0]);
+
+
+
 			// Place assumptions to variables
-			// Use parseXXX methods for type casting
+			// Use Number and parseXXX methods for type casting
 			
 			// Key Factors
 
 			// 1. Initial Investment
-			var initial = Number(document.forms['keyfactors'].elements['Initial Investment'].value);
-			
+			// Eliminate commas when users input them
+			var initial = Number(document.forms['keyfactors'].elements['Initial Investment'].value.split(",").join(""));
 			
 			// 2. Cost of Capital
-			var costOfCapital = parseFloat(document.forms['keyfactors'].elements['Cost of Capital'].value / 100);
+			var costOfCapital = parseFloat(document.forms['keyfactors'].elements['Cost of Capital'].value.split(",").join("") / 100);
 			
 			// 3. Investment Term(Year)
-			var investmentTerm = Number(document.forms['keyfactors'].elements['Investment Term'].value);
+			var investmentTerm = Number(document.forms['keyfactors'].elements['Investment Term'].value.split(",").join(""));
 
 			// 4. Coporate Tax Rate
-			var corporateTax = parseFloat(document.forms['keyfactors'].elements['Corporate Tax Rate'].value / 100);
+			var corporateTax = parseFloat(document.forms['keyfactors'].elements['Corporate Tax Rate'].value.split(",").join("") / 100);
 
 			// 5. Method of Depreciation => Straight-Line
 
@@ -30,38 +49,45 @@ function run(){
 			
 			// 1, 2. Sales and Cost(Annual Economic Effect)
 			// Place "after-tax" calculation results
-			var sales = Number(document.forms['cashflows'].elements['Sales'].value * (1 - corporateTax));
-			var cost = Number(document.forms['cashflows'].elements['Cost'].value * (1 - corporateTax));
+			var sales = Number(document.forms['cashflows'].elements['Sales'].value.split(",").join("") * (1 - corporateTax));
+			var cost = Number(document.forms['cashflows'].elements['Cost'].value.split(",").join("") * (1 - corporateTax));
 
 			// 3. Annual Tax Shield from Depreciation(Non-monetary item)
 			// Tax Shield calculation = Profit/Loss(Expenses) * Tax Rate
-			var depreciation = Number(document.forms['cashflows'].elements['Depreciation'].value * corporateTax);
+			var depreciation = Number(document.forms['cashflows'].elements['Depreciation'].value.split(",").join("") * corporateTax);
 
 			// 4. Residual Value => Cash equivalent value on disposal
 			// No tax effect occurs due to the nature of transactions (simply in exchange of disposal assets)
-			var residualValue = Number(document.forms['cashflows'].elements['Residual Value'].value);
+			var residualValue = Number(document.forms['cashflows'].elements['Residual Value'].value.split(",").join(""));
 
 			// 5. Tax Shield from Profit/Loss on Assets Sales(Non-monetary item)
 			// Tax Shield calculation = Profit/Loss(Expenses) * Tax Rate
 			// Profit => -(Cash OutFlow), Loss => +(Cash InFlow)
-			var profitLoss = Number(document.forms['cashflows'].elements['Profit Loss'].value * corporateTax);
+			var profitLoss = Number(document.forms['cashflows'].elements['Profit Loss'].value.split(",").join("") * corporateTax);
 			
 
 
 
 
 			// Assumption Validation
-			var requiredArray  = [initial, costOfCapital, investmentTerm, corporateTax, 
-								sales, cost];
+			// Not using assumption variables (e.g. initial, sales...etc) to separate "0" and "empty boxes"
+			// Validation should recognize when users input 0 on purpose
+			var requiredArray  = [document.forms['keyfactors'].elements['Initial Investment'].value.split(",").join(""),
+								document.forms['keyfactors'].elements['Cost of Capital'].value.split(",").join(""), 
+								document.forms['keyfactors'].elements['Investment Term'].value.split(",").join(""), 
+								document.forms['keyfactors'].elements['Corporate Tax Rate'].value.split(",").join(""),  
+								document.forms['cashflows'].elements['Sales'].value.split(",").join(""), 
+								document.forms['cashflows'].elements['Cost'].value.split(",").join("")];
 
 			var positiveArray = [initial, costOfCapital, investmentTerm, corporateTax, 
 								sales, cost, depreciation, residualValue];
 
 			
+
 			function validation(){
 				for(var i = 0; i < requiredArray.length; i++){
-					if(!requiredArray[i]){
-						return false;
+					if((requiredArray[i] !== 0) && !requiredArray[i]){
+							return false;
 					}
 				}
 
@@ -261,13 +287,17 @@ function run(){
 				document.forms['calculation'].elements['Profitability Index'].value = profitIndex();
 				document.forms['calculation'].elements['Internal Rate of Return'].value = IRR();
 
+				var irr = document.forms['calculation'].elements['Internal Rate of Return'].value;
+
 				// Document.getElementsByClassName returns an array-like object(NodeList)
 				if(npv > 0){
 					if(pIndex > 1){
-						hide(document.getElementsByClassName('result')[0]);
-						show(document.getElementsByClassName('go')[0]);
-						hide(document.getElementsByClassName('comments')[0]);
-						show(document.getElementsByClassName('go-comments')[0]);
+						if(irr > costOfCapital){
+							hide(document.getElementsByClassName('result')[0]);
+							show(document.getElementsByClassName('go')[0]);
+							hide(document.getElementsByClassName('comments')[0]);
+							show(document.getElementsByClassName('go-comments')[0]);
+						}
 					}
 				}else{
 					hide(document.getElementsByClassName('result')[0]);
@@ -341,6 +371,7 @@ function run(){
 	}
 
 
+	// Add fadeIn fadeOut effects to the Cost of Capital input box
 	if(document.getElementById('costOfCapital') !== null){
 		document.getElementById('costOfCapital').addEventListener('click', function(){
 			fadeIn(document.getElementById('industry_return'), 400);
@@ -436,7 +467,12 @@ function run(){
 
 		request.send();
 
-	//}
+
+	// Add an addEventListener to "Try again?" button
+	document.getElementById('reload').addEventListener('click', function(){
+		window.location.reload();
+	});
+
 }
 
 

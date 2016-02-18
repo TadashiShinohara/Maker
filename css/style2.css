@@ -154,13 +154,13 @@ input{
   font-size: 0.9em;
 }
 
-#calcButton{
+.calcButton{
   margin-top: 70px;
   height: 100px;
   margin-left: 10px;
 }
 
-#calcButton button{
+.calcButton button{
   width: 10rem;
   background-color: #3366CC;
   font-size: 1.3rem;
@@ -235,7 +235,7 @@ input{
 }
 
 .content-footer{
-  margin-top: 10rem;
+  margin-top: 7rem;
 }
 
 .social > li{
