@@ -153,12 +153,15 @@ function run(){
 			*/
 
 			// Assign values to variables "irr" and "irrNPV" as a calculation starting point 
-			var irr = costOfCapital;
-			var irrNPV = npv;
+			//var irr = costOfCapital;
+			//var irrNPV = npv;
 
 
 
 			function IRR(){
+				// Assign values to variables "irr" and "irrNPV" as a calculation starting point 
+				var irr = costOfCapital;
+				var irrNPV = npv;
 				
 				/** If irrNPV (equivalent to npv at this moment) is zero, 
 				* then that's the IRR that we want. 
@@ -166,7 +169,7 @@ function run(){
 				*/
 				if(validation()){
 					if(irrNPV === 0){
-						return irr;
+						return Math.round(irr * 100) / 100;
 					}else{
 						return irrCalc(irrNPV, irr);
 					}
@@ -251,7 +254,7 @@ function run(){
 				el.style.display = 'none';
 			}
 			
-
+			
 			// Result Presentation
 			if(validation()){
 				document.forms['calculation'].elements['Net Present Value'].value = netPresentValue();

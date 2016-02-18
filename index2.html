@@ -55,28 +55,33 @@
           <h3>Tips</h3>
           <p>
           Initial Invetment - An initial purchase amount of new capital investments.<br><br>
-          Cost of Capital - How much (8%, 10% etc...) do creditors and investors expect from new investments? (eg. after-tax interest rates on borrowings/investors' expected return)<br><br>
-          Investment Term - How long do new capital investments generate economic benefits?
+          Cost of Capital - How much (8%, 10% etc...) do creditors and investors expect from new investments? (eg. after-tax interest rates on borrowings/investors' expected return) If you're not sure about the Cost of Capital of your investment, check the expected return by industries. (Click the box!) <br><br>
+          Investment Term - How long do new capital investments generate economic benefits? 5 years? 10 years?<br><br>
+          Corporate Tax Rate - about 40% in the U.S.<br><br>
+          Method of Depreciation - Right now, Straight-Line Depreciation is the only method for the app.
+
         </p>
         </div>
           <form method = "POST" action = "js/script.js" name = "keyfactors">
             <fieldset name = "keyfactors">
               <p>
-                <label for = "initial">Initial Investment (in USD) </lable><input id = "initial" type = "text" name = "Initial Investment">
+                <label for = "initial">Initial Investment (in USD) </lable><input id = "initial" type = "text" name = "Initial Investment"> (e.g. 10000)
               </p>
               <p>
-                <label for = "costOfCapital">Cost of Capital (%) </lable><input id = "costOfCapital" type = "text" name = "Cost of Capital">
+                <label for = "costOfCapital">Cost of Capital (%) </lable><input id = "costOfCapital" type = "text" name = "Cost of Capital"> %
               </p>
               <p>
-                <label for = "investmentTerm">Investment Term (in years) </label><input id = "investmentTerm" type = "text" name = "Investment Term">
+                <label for = "investmentTerm">Investment Term (in years) </label><input id = "investmentTerm" type = "text" name = "Investment Term"> year(s)
               </p>
               <p>
-                <label for = "corporateTaxRate"> Corporate Tax Rate (%) </lable><input id = "corporateTaxRate" type = "text" name = "Corporate Tax Rate">
+                <label for = "corporateTaxRate"> Corporate Tax Rate (%) </lable><input id = "corporateTaxRate" type = "text" name = "Corporate Tax Rate"> %
               </p>
               <p>
                 <label for = "methodOfDepreciation"> Method of Depreciation </label><input id = "methodOfDepreciation" type = "radio" name = "Method of Depreciation" value = "Straight-Line" checked>Straight-Line
               </p>
-              <p>Right now, Straight-Line Depreciation is the only method used for the app.
+              <br>
+              <p>
+                <input type = "reset" value = "Reset" class = "button">
               </p>
             </fieldset>
           </form>
@@ -87,8 +92,8 @@
       <div id = "explanation2">
         <h3>Tips</h3>
         <p>
-          Sales/Cost - How much do sales and cost increase annually from new capital investments?<br><br>
-          Depreciation - Annual depreciation expense from new capital investments<br><br>
+          Sales/Cost - How much do sales and cost increase ANNUALLY from the new capital investments? For example, you purchase $1,000,000 machines, and the machine increases annual Sales and Cost by $500,000 and $100,000, respectively. Then, please input 500000 and 100000.<br><br>
+          Depreciation - ANNUAL depreciation expense from new capital investments<br><br>
           Residual Value - Cash value on disposal<br><br>
           Profit/Loss = Initial Amount - (Accumulated Depreciation + Residual Value)<br>
           Profit -(Cash Outflow), Loss +(Cash Inflow)
@@ -97,27 +102,31 @@
         <form method = "POST" action = "js/script.js" name = "cashflows">
           <fieldset name = "Cash Flows Before Tax">
             <p>
-              <label for = "sales">Sales (in USD) </lable><input id = "sales" type = "text" class = "exp2" name = "Sales">
+              <label for = "sales">Sales (in USD) </lable><input id = "sales" type = "text" class = "exp2" name = "Sales"> (e.g. 6000)
             </p>
             <p>
-              <label for = "cost">Cost (in USD) </label><input id = "cost" type = "text" class = "exp2" name = "Cost">
+              <label for = "cost">Cost (in USD) </label><input id = "cost" type = "text" class = "exp2" name = "Cost"> (e.g. 1000)
             </p>
             <p>
-              <label for = "depreciation">Depreciation (in USD) </label><input id = "depreciation" type = "text" class = "exp2" name = "Depreciation">
+              <label for = "depreciation">Depreciation (in USD) </label><input id = "depreciation" type = "text" class = "exp2" name = "Depreciation"> (e.g. 1000)
             </p>
             <p>
-              <label for = "residualValue">Residual Value (in USD) </lable><input id = "residualValue" type = "text" class = "exp2" name = "Residual Value">
+              <label for = "residualValue">Residual Value (in USD) </lable><input id = "residualValue" type = "text" class = "exp2" name = "Residual Value"> (e.g. 1000)
             </p>
             <p>
-              <label for = "profitLoss">Profit/Loss on Assets Sales (in USD) </label><input id = "profitLoss" type = "text" class = "exp2" name = "Profit Loss">
+              <label for = "profitLoss">Profit/Loss on Assets Sales (in USD) </label><input id = "profitLoss" type = "text" class = "exp2" name = "Profit Loss"> (e.g. -500)
             </p>
+            <br>
+            <p>
+               <input type = "reset" value = "Reset" class = "button">
+             </p>
           </fieldset>
         </form>
       </div>
   </section>
 
   <section class = "section">
-    <div>
+    <div id = "calcButton">
       <button class = "button" id = "calc">Calculation</button>
     </div>
     <div id = "errorDiv">
@@ -135,8 +144,11 @@
       <div id = "explanation3">
         <h3>Tips</h3>
         <p>
-          Net Present Value = Initial amount - Discounted Cash Flows<br><br>
-          Profitabiliy Index = Discounted Cash Flows / Initial Amount
+          Net Present Value = <br>
+          Discounted Cash Flows - Initial Amount<br>
+          It should be positive for a better investment. If it's negative, you're losing money!<br><br>
+          Profitabiliy Index = Discounted Cash Flows / Initial Amount<br><br>
+          IRR - Greater than the Cost of Capital? Then, it's worth it!
         </p>
       </div>
       <form name = "calculation">
@@ -148,7 +160,7 @@
             <label for = "profitabilityIndex">Profitability Index </label><input id = "profitabilityIndex" type = "text" name = "Profitability Index">
           </p>
           <p>
-            <label for = "IIR">Internal Rate of Return (%) </label><input id = "IIR" type = "text" name = "Internal Rate of Return">
+            <label for = "IIR">Internal Rate of Return (%) </label><input id = "IIR" type = "text" name = "Internal Rate of Return"> %
           </p>
         </fieldset>
       </form>

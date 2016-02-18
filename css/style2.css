@@ -121,13 +121,12 @@ input{
   text-align: center;
 }
 
-
 #explanation1{
   position: absolute;
   left: 800px;
   top: 560px;
   padding: 10px;
-  width: 400px;
+  width: 430px;
   height: 454.5px;
   text-align: left;
   font-size: 0.9em;
@@ -136,9 +135,9 @@ input{
 #explanation2{
   position: absolute;
   left: 800px;
-  top: 1020px;
+  top: 1090px;
   padding: 10px;
-  width: 400px;
+  width: 430px;
   height: 454.5px;
   text-align: left;
   font-size: 0.9em;
@@ -147,18 +146,32 @@ input{
 #explanation3{
   position: absolute;
   left: 800px;
-  top: 1600px;
+  top: 1850px;
   padding: 10px;
-  width: 400px;
+  width: 430px;
   height: 454.5px;
   text-align: left;
   font-size: 0.9em;
 }
 
+#calcButton{
+  margin-top: 70px;
+  height: 100px;
+  margin-left: 10px;
+}
+
+#calcButton button{
+  width: 10rem;
+  background-color: #3366CC;
+  font-size: 1.3rem;
+  text-align: center;
+  color: #ffffff;
+}
+
 #errorDiv{
   position: absolute;
   left: 400px;
-  top: 1418px;
+  top: 1630px;
   padding: 10px;
   width: 800px;
   height: 454.5px;
