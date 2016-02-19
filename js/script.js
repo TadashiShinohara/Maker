@@ -10,7 +10,7 @@ function run(){
 			document.forms['calculation'].elements['Internal Rate of Return'].value = "";
 
 
-			// Hide the error message first for re-calculation
+			// Hide the error message for re-calculation
 			hide(document.getElementById('errorDiv'));
 			
 			// Reset the comments for re-calculation
@@ -82,7 +82,8 @@ function run(){
 			var positiveArray = [initial, costOfCapital, investmentTerm, corporateTax, 
 								sales, cost, depreciation, residualValue];
 
-			
+
+
 
 			function validation(){
 				for(var i = 0; i < requiredArray.length; i++){
@@ -164,25 +165,12 @@ function run(){
 			}
 
 
-			// Assign NPV and PI values to each HTML element
-			//document.forms['calculation'].elements['Net Present Value'].value = netPresentValue();
-			//document.forms['calculation'].elements['Profitability Index'].value = profitIndex();
-
-
-
-
 
 			// Internal Rate of Return Calculation
 			/** Internal Rate of Return is the interest rate at which the net present 
 			* value of all the cash flows (both positive and negative) from a project 
 			* or investment equal zero.
 			*/
-
-			// Assign values to variables "irr" and "irrNPV" as a calculation starting point 
-			//var irr = costOfCapital;
-			//var irrNPV = npv;
-
-
 
 			function IRR(){
 				// Assign values to variables "irr" and "irrNPV" as a calculation starting point 
@@ -266,9 +254,7 @@ function run(){
 				return irrNPV;
 			}
 
-			
-			// Assign IRR value to the HTML element
-			//document.forms['calculation'].elements['Internal Rate of Return'].value = IRR();
+
 
 
 			// Effects functions (show, hide)
@@ -281,15 +267,19 @@ function run(){
 			}
 			
 			
-			// Result Presentation
+			// Result Presentation to HTML
 			if(validation()){
+				
+				// Assign NPV, PI and IRR values to each HTML element
 				document.forms['calculation'].elements['Net Present Value'].value = netPresentValue();
 				document.forms['calculation'].elements['Profitability Index'].value = profitIndex();
 				document.forms['calculation'].elements['Internal Rate of Return'].value = IRR();
 
+				// Declare irr variable here because to avoid null
 				var irr = document.forms['calculation'].elements['Internal Rate of Return'].value;
 
 				// Document.getElementsByClassName returns an array-like object(NodeList)
+				// NPV > 0, PI > 1, IRR > Cost of Capital, then good to go. 
 				if(npv > 0){
 					if(pIndex > 1){
 						if(irr > costOfCapital){
@@ -307,6 +297,7 @@ function run(){
 				}
 
 			}else{
+				// To prompt users to check their inputs 
 				show(document.getElementById('errorDiv'));
 			}
 			
@@ -383,8 +374,8 @@ function run(){
 
 		
 	
-		
-		// 10 Industry Portfolios (Monthly)
+		// API Use
+		// 10 Industry Portfolios (Monthly) from Quandl.com
 		// 10 years data from 2005-08-31 to 2015-07-31
 		var myurl = 'https://www.quandl.com/api/v3/datasets/KFRENCH/10_IND_PORTF_M.json?api_key=zygEkvv9GeTHH7Ep5M3y&start_date=2005-08-31';
 		var request = new XMLHttpRequest();
@@ -393,11 +384,18 @@ function run(){
 		request.onload = function(){
 			if(request.status >= 200 && request.status < 400){
 				var data = JSON.parse(request.responseText);
-				industry_names = data['dataset']['column_names'];
-				indexArray = data['dataset']['data'];
+				
+				// Create a variable to place an array for industry names
+				var industry_names = data.dataset.column_names;
 
+				// Create a variable to place an array for industry returns of 120 month
+				var indexArray = data.dataset.data;
+
+				// An arry declaration for industry return information to be contained
+				// This array is used for HTML presentation
 				var industryData = [];
 
+				// Counter starts from 1 to skip "Date" in the industry_names
 				for(var i = 1; i < industry_names.length; i++){
 					industryData[i - 1] = {	industry: industry_names[i],
 										total: 0,
@@ -405,56 +403,102 @@ function run(){
 										median: 0};
 				}
 
+				// Row => 10 industries (Skip "0" for "Date" information)
 				for(var row = 1; row <= 10; row++){
+					// Local variables declaration
 					var total = 0;
 					var average = 0;
+					
+					// A variable to calculate a median
 					var medianArray = [];
+					
+					// Column => Returns by month    indexArray.length = 120 (months)
 					for(var column = 0; column < indexArray.length; column++){
+						
+						// Total returns for 120 months for each industry
 						total += indexArray[column][row];
+
+						// To contain data of 120 months by industry (Not by month)
 						medianArray.push(indexArray[column][row]);
 					}
 
-					industryData[row - 1]['total'] = total;
+					// Assign the local variable "total" to the industryData array's "total" property
+					industryData[row - 1].total = total;
 
 					// Average calculation
-					monthlyAvg = total / indexArray.length; // Monthly
-					annualAvg = Math.round((monthlyAvg * 12) * 100) / 100; // Annual
-					industryData[row - 1]['average'] = annualAvg;
+					monthlyAvg = total / indexArray.length; // Monthly (120 months)
+					annualAvg = Math.round((monthlyAvg * 12) * 100) / 100; // Convert to Annually
+					
+					// Place the annual average data to the industryData array's "average" property
+					industryData[row - 1].average = annualAvg;
 
-					// Median calculation (Median of 120 months; 
-					// An annual median by assuming the median of a month * 12;
-
-					industryData[row - 1]['median'] = Math.round((medianCalc(medianArray) * 12) * 100) / 100;
+					// Median calculation (Median of 120 months) 
+					// An annual median by assuming the median of a month * 12
+					industryData[row - 1].median = Math.round((medianCalc(medianArray) * 12) * 100) / 100;
 				}
 				
 				
-				// If the difference betwewen average and median is big, take the median.
-		
+				// If a difference betwewen average and median is too big, take the median for the industry expected return
 				function avgVsMedian(arr){
-						if(Math.abs(arr['average'] - arr['median']) > 3){
-							return arr['median'];
+						
+						// Here, assuming the difference greater than 3% is too big
+						if(Math.abs(arr.average - arr.median) > 3){
+							return arr.median;
 						}else{
-							return arr['average'];
+							return arr.average;
 						}
 				}
 
-
+				// Median calculation
 				function medianCalc(arr, fn){
+
+					// Put an index of the half in the array
+					// Array length 7 => (7 / 2) | 0 => 3
 					var half = (arr.length / 2) | 0;
+
+					// Sort the array
 					var temp = arr.sort(fn);
 
+					// If the number of the temp array values is odd...
 					if(temp.length % 2){
+
+						// Return the element in the place of the half
+						// [1, 2, 3, 4, 5, 6, 7] => 4 is a median
 						return temp[half];
 					}
+
+					// If the number of the temp array values is even...
+					// Return the average number of the half and the [half - 1] elements
+					// [1, 2, 3, 4, 5, 6] => (4 + 3) / 2 => 3.5 is a median
 					return (temp[half - 1] + temp[half]) / 2;
 				}
+				
+				// Result presentation to the HTML
+				function returnPresent(arr, fn){
 
-
-				for(var i = 0; i < document.getElementsByTagName('td').length; i++){
-					var el = document.getElementsByTagName('td')[i];
-					el.innerHTML = avgVsMedian(industryData[i]);
+					// Get 'td' tag object
+					var el = document.getElementsByTagName('td');
+					for(var i = 0; i < arr.length; i++){
+						
+						// Calculate Avg vs Median and invoke a function to present results
+						// to td tags in the HTML
+						fn(avgVsMedian(arr[i]), el[i]);
+					}
 				}
 
+				returnPresent(industryData, function(num, el){
+					
+					// Null and undefined check
+					if(el){
+						el.innerHTML = num;	
+					}
+				});
+
+				// Result presentation to the HTML
+				/*for(var i = 0; i < document.getElementsByTagName('td').length; i++){
+					var el = document.getElementsByTagName('td')[i];
+					el.innerHTML = avgVsMedian(industryData[i]);
+				}*/
 
 			}else{
 				alert('Error returned from the server');
@@ -468,11 +512,15 @@ function run(){
 		request.send();
 
 
-	// Add an addEventListener to "Try again?" button
-	document.getElementById('reload').addEventListener('click', function(){
-		window.location.reload();
-	});
 
+
+	// Add an addEventListener to "Try again" button
+	if(document.getElementById('reload') !== null){
+		document.getElementById('reload').addEventListener('click', function(){
+			window.location.reload();
+		});
+	}
+	
 }
 
 
