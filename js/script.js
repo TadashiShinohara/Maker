@@ -72,33 +72,102 @@ function run(){
 			// Assumption Validation
 			// Not using assumption variables (e.g. initial, sales...etc) to separate "0" and "empty boxes"
 			// Validation should recognize when users input 0 on purpose
-			var requiredArray  = [document.forms['keyfactors'].elements['Initial Investment'].value.split(",").join(""),
+			/*var requiredArray  = [document.forms['keyfactors'].elements['Initial Investment'].value.split(",").join(""),
 								document.forms['keyfactors'].elements['Cost of Capital'].value.split(",").join(""), 
 								document.forms['keyfactors'].elements['Investment Term'].value.split(",").join(""), 
 								document.forms['keyfactors'].elements['Corporate Tax Rate'].value.split(",").join(""),  
 								document.forms['cashflows'].elements['Sales'].value.split(",").join(""), 
-								document.forms['cashflows'].elements['Cost'].value.split(",").join("")];
+								document.forms['cashflows'].elements['Cost'].value.split(",").join("")];*/
+
+			/*var requiredArray = [initial, costOfCapital, investmentTerm, corporateTax, 
+								sales, cost, depreciation, residualValue, profitLoss];
 
 			var positiveArray = [initial, costOfCapital, investmentTerm, corporateTax, 
-								sales, cost, depreciation, residualValue];
-
-
+								sales, cost, depreciation];*/
 
 
 			function validation(){
+				if(typeof initial === "number" && initial >= 0){
+					if(typeof costOfCapital === "number" && costOfCapital >= 0){
+						if(typeof investmentTerm === "number" && investmentTerm >= 0){
+							if(typeof corporateTax === "number" && corporateTax >= 0){
+								if(typeof sales === "number" && sales >= 0){
+									if(typeof cost === "number" && cost >= 0){
+										if(typeof depreciation === "number" && depreciation >= 0){
+											if(typeof residualValue === "number" && residualValue >= 0){
+												if(typeof profitLoss === "number"){
+													return true;
+												}else{
+													return false;
+												}
+											}else{
+												return false;
+											}
+										}else{
+											return false;
+										}
+									}else{
+										return false;
+									}
+								}else{
+									return false;
+								}
+							}else{
+								return false;
+							}
+						}else{
+							return false;
+						}
+					}else{
+						return false;
+					}
+				}else{
+					return false;
+				}
+			}
+
+
+			/*function validation(){
+				for(var i = 0; i < requiredArray.length; i++){
+					if((typeof requiredArray[i]) === "number"){
+							return true;
+					}
+				}
+
+				for(var i = 0; i < positiveArray.length; i++){
+					if(positiveArray[i] >= 0){
+						return true;
+					}
+				}
+				return false;
+			}*/
+
+			
+			//文字が入っていた場合に動かなくなる...
+
+			/*function validation(){
 				for(var i = 0; i < requiredArray.length; i++){
 					if((requiredArray[i] !== 0) && !requiredArray[i]){
+							console.log("requiredArray false");
 							return false;
 					}
 				}
 
 				for(var i = 0; i < positiveArray.length; i++){
-					if(positiveArray[i] < 0){;
+					if(positiveArray[i] < 0){
+						console.log("positiveArray false");
 						return false;
 					}
 				}
 				return true;
-			}
+			}*/
+
+
+			var validationBoolean = validation();
+			console.log(validationBoolean);
+
+
+
 
 
 
@@ -181,7 +250,7 @@ function run(){
 				* then that's the IRR that we want. 
 				* IRR = the interest rate for NPV being zero
 				*/
-				if(validation()){
+				if(validationBoolean){
 					if(irrNPV === 0){
 						return Math.round(irr * 100) / 100;
 					}else{
@@ -268,7 +337,7 @@ function run(){
 			
 			
 			// Result Presentation to HTML
-			if(validation()){
+			if(validationBoolean){
 				
 				// Assign NPV, PI and IRR values to each HTML element
 				document.forms['calculation'].elements['Net Present Value'].value = netPresentValue();
