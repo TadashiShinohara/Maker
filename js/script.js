@@ -31,20 +31,15 @@ function run(){
 			// 1. Initial Investment
 			// Eliminate commas when users input them
 			var initial = Number(document.forms['keyfactors'].elements['Initial Investment'].value.split(",").join(""));
-			console.log(initial);
-			console.log(typeof initial);
 			
 			// 2. Cost of Capital
 			var costOfCapital = parseFloat(document.forms['keyfactors'].elements['Cost of Capital'].value.split(",").join("") / 100);
-			console.log(typeof costOfCapital);
 			
 			// 3. Investment Term(Year)
 			var investmentTerm = Number(document.forms['keyfactors'].elements['Investment Term'].value.split(",").join(""));
-			console.log(typeof investmentTerm);
 			
 			// 4. Coporate Tax Rate
 			var corporateTax = parseFloat(document.forms['keyfactors'].elements['Corporate Tax Rate'].value.split(",").join("") / 100);
-			console.log(typeof corporateTax);
 			
 			// 5. Method of Depreciation => Straight-Line
 
@@ -55,27 +50,22 @@ function run(){
 			// 1, 2. Sales and Cost(Annual Economic Effect)
 			// Place "after-tax" calculation results
 			var sales = Number(document.forms['cashflows'].elements['Sales'].value.split(",").join("") * (1 - corporateTax));
-			console.log(typeof sales);
 			
 			var cost = Number(document.forms['cashflows'].elements['Cost'].value.split(",").join("") * (1 - corporateTax));
-			console.log(typeof cost);
 
 			// 3. Annual Tax Shield from Depreciation(Non-monetary item)
 			// Tax Shield calculation = Profit/Loss(Expenses) * Tax Rate
 			var depreciation = Number(document.forms['cashflows'].elements['Depreciation'].value.split(",").join("") * corporateTax);
-			console.log(typeof depreciation);
-
+			
 			// 4. Residual Value => Cash equivalent value on disposal
 			// No tax effect occurs due to the nature of transactions (simply in exchange of disposal assets)
 			var residualValue = Number(document.forms['cashflows'].elements['Residual Value'].value.split(",").join(""));
-			console.log(typeof residualValue);
-
+			
 			// 5. Tax Shield from Profit/Loss on Assets Sales(Non-monetary item)
 			// Tax Shield calculation = Profit/Loss(Expenses) * Tax Rate
 			// Profit => -(Cash OutFlow), Loss => +(Cash InFlow)
 			var profitLoss = Number(document.forms['cashflows'].elements['Profit Loss'].value.split(",").join("") * corporateTax);
-			console.log(typeof profitLoss);
-
+			
 			// Assumption Validation
 			// Not using assumption variables (e.g. initial, sales...etc) to separate "0" and "empty boxes"
 			// Validation should recognize when users input 0 on purpose
@@ -94,14 +84,14 @@ function run(){
 
 			// Sorry for this ugly code, but this is to avoid "Aw snap" brower error
 			function validation(){
-				if(typeof initial === "number" && initial >= 0){
-					if(typeof costOfCapital === "number" && costOfCapital >= 0){
-						if(typeof investmentTerm === "number" && investmentTerm >= 0){
-							if(typeof corporateTax === "number" && corporateTax >= 0){
-								if(typeof sales === "number" && sales >= 0){
-									if(typeof cost === "number" && cost >= 0){
-										if(typeof depreciation === "number" && depreciation >= 0){
-											if(typeof residualValue === "number" && residualValue >= 0){
+				if(typeof initial === "number" && initial > 0){
+					if(typeof costOfCapital === "number" && costOfCapital > 0){
+						if(typeof investmentTerm === "number" && investmentTerm > 0){
+							if(typeof corporateTax === "number" && corporateTax > 0){
+								if(typeof sales === "number" && sales > 0){
+									if(typeof cost === "number" && cost > 0){
+										if(typeof depreciation === "number" && depreciation > 0){
+											if(typeof residualValue === "number" && residualValue > 0){
 												if(typeof profitLoss === "number"){
 													return true;
 												}else{
