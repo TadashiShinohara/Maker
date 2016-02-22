@@ -87,14 +87,14 @@ function run(){
 
 
 			function validation(){
-				if(typeof initial === "number" && initial >= 0){
-					if(typeof costOfCapital === "number" && costOfCapital >= 0){
-						if(typeof investmentTerm === "number" && investmentTerm >= 0){
-							if(typeof corporateTax === "number" && corporateTax >= 0){
-								if(typeof sales === "number" && sales >= 0){
-									if(typeof cost === "number" && cost >= 0){
-										if(typeof depreciation === "number" && depreciation >= 0){
-											if(typeof residualValue === "number" && residualValue >= 0){
+				if(typeof initial === "number" && initial > 0){
+					if(typeof costOfCapital === "number" && costOfCapital > 0){
+						if(typeof investmentTerm === "number" && investmentTerm > 0){
+							if(typeof corporateTax === "number" && corporateTax > 0){
+								if(typeof sales === "number" && sales > 0){
+									if(typeof cost === "number" && cost > 0){
+										if(typeof depreciation === "number" && depreciation > 0){
+											if(typeof residualValue === "number" && residualValue > 0){
 												if(typeof profitLoss === "number"){
 													return true;
 												}else{
