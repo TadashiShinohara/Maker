@@ -78,6 +78,7 @@ function run(){
 			
 
 			// Assumption Validation
+<<<<<<< HEAD
 
 			// Sorry for this ugly code, but this is to avoid "Aw snap" brower error
 			function validation(){
@@ -113,12 +114,112 @@ function run(){
 							return false;
 						}
 					}else{
+=======
+			// Not using assumption variables (e.g. initial, sales...etc) to separate "0" and "empty boxes"
+			// Validation should recognize when users input 0 on purpose
+			/*var requiredArray  = [document.forms['keyfactors'].elements['Initial Investment'].value.split(",").join(""),
+								document.forms['keyfactors'].elements['Cost of Capital'].value.split(",").join(""), 
+								document.forms['keyfactors'].elements['Investment Term'].value.split(",").join(""), 
+								document.forms['keyfactors'].elements['Corporate Tax Rate'].value.split(",").join(""),  
+								document.forms['cashflows'].elements['Sales'].value.split(",").join(""), 
+								document.forms['cashflows'].elements['Cost'].value.split(",").join("")];*/
+
+			/*var requiredArray = [initial, costOfCapital, investmentTerm, corporateTax, 
+								sales, cost, depreciation, residualValue, profitLoss];
+
+			var positiveArray = [initial, costOfCapital, investmentTerm, corporateTax, 
+								sales, cost, depreciation];*/
+
+
+			function validation(){
+				if(typeof initial === "number" && initial > 0){
+					if(typeof costOfCapital === "number" && costOfCapital > 0){
+						if(typeof investmentTerm === "number" && investmentTerm > 0){
+							if(typeof corporateTax === "number" && corporateTax > 0){
+								if(typeof sales === "number" && sales > 0){
+									if(typeof cost === "number" && cost > 0){
+										if(typeof depreciation === "number" && depreciation > 0){
+											if(typeof residualValue === "number" && residualValue > 0){
+												if(typeof profitLoss === "number"){
+													return true;
+												}else{
+													return false;
+												}
+											}else{
+												return false;
+											}
+										}else{
+											return false;
+										}
+									}else{
+										return false;
+									}
+								}else{
+									return false;
+								}
+							}else{
+								return false;
+							}
+						}else{
+							return false;
+						}
+					}else{
 						return false;
 					}
 				}else{
 					return false;
 				}
 			}
+
+
+			/*function validation(){
+				for(var i = 0; i < requiredArray.length; i++){
+					if((typeof requiredArray[i]) === "number"){
+							return true;
+					}
+				}
+
+				for(var i = 0; i < positiveArray.length; i++){
+					if(positiveArray[i] >= 0){
+						return true;
+					}
+				}
+				return false;
+			}*/
+
+			
+			//文字が入っていた場合に動かなくなる...
+
+			/*function validation(){
+				for(var i = 0; i < requiredArray.length; i++){
+					if((requiredArray[i] !== 0) && !requiredArray[i]){
+							console.log("requiredArray false");
+							return false;
+					}
+				}
+
+				for(var i = 0; i < positiveArray.length; i++){
+					if(positiveArray[i] < 0){
+						console.log("positiveArray false");
+>>>>>>> 77769160c99e8b467469ab7a4514eb28813e2fc6
+						return false;
+					}
+				}else{
+					return false;
+				}
+<<<<<<< HEAD
+			}
+=======
+				return true;
+			}*/
+
+
+			var validationBoolean = validation();
+			console.log(validationBoolean);
+
+
+
+>>>>>>> 77769160c99e8b467469ab7a4514eb28813e2fc6
 
 			var validationBoolean = validation();
 
