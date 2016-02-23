@@ -25,22 +25,27 @@ function run(){
 
 			// Place assumptions to variables
 			// Use Number and parseXXX methods for type casting
+			// XXXVal variables are for validation only
 			
 			// Key Factors
 
 			// 1. Initial Investment
-			// Eliminate commas when users input them
+			// Eliminate commas when users input them => split(",").join("")
 			var initial = Number(document.forms['keyfactors'].elements['Initial Investment'].value.split(",").join(""));
+			var initialVal = document.forms['keyfactors'].elements['Initial Investment'].value;
 			
 			// 2. Cost of Capital
 			var costOfCapital = parseFloat(document.forms['keyfactors'].elements['Cost of Capital'].value.split(",").join("") / 100);
+			var costOfCapitalVal = document.forms['keyfactors'].elements['Cost of Capital'].value;
 			
 			// 3. Investment Term(Year)
 			var investmentTerm = Number(document.forms['keyfactors'].elements['Investment Term'].value.split(",").join(""));
-
+			var investmentTermVal = document.forms['keyfactors'].elements['Investment Term'].value;
+			
 			// 4. Coporate Tax Rate
 			var corporateTax = parseFloat(document.forms['keyfactors'].elements['Corporate Tax Rate'].value.split(",").join("") / 100);
-
+			var corporateTaxVal = document.forms['keyfactors'].elements['Corporate Tax Rate'].value;
+			
 			// 5. Method of Depreciation => Straight-Line
 
 			
@@ -50,52 +55,41 @@ function run(){
 			// 1, 2. Sales and Cost(Annual Economic Effect)
 			// Place "after-tax" calculation results
 			var sales = Number(document.forms['cashflows'].elements['Sales'].value.split(",").join("") * (1 - corporateTax));
+			var salesVal = document.forms['cashflows'].elements['Sales'].value;
+			
 			var cost = Number(document.forms['cashflows'].elements['Cost'].value.split(",").join("") * (1 - corporateTax));
+			var costVal = document.forms['cashflows'].elements['Cost'].value;
 
 			// 3. Annual Tax Shield from Depreciation(Non-monetary item)
 			// Tax Shield calculation = Profit/Loss(Expenses) * Tax Rate
 			var depreciation = Number(document.forms['cashflows'].elements['Depreciation'].value.split(",").join("") * corporateTax);
-
+			var depreciationVal = document.forms['cashflows'].elements['Depreciation'].value;
+			
 			// 4. Residual Value => Cash equivalent value on disposal
 			// No tax effect occurs due to the nature of transactions (simply in exchange of disposal assets)
 			var residualValue = Number(document.forms['cashflows'].elements['Residual Value'].value.split(",").join(""));
-
+			var residualValueVal = document.forms['cashflows'].elements['Residual Value'].value;
+			
 			// 5. Tax Shield from Profit/Loss on Assets Sales(Non-monetary item)
 			// Tax Shield calculation = Profit/Loss(Expenses) * Tax Rate
 			// Profit => -(Cash OutFlow), Loss => +(Cash InFlow)
 			var profitLoss = Number(document.forms['cashflows'].elements['Profit Loss'].value.split(",").join("") * corporateTax);
+			var profitLossVal = document.forms['cashflows'].elements['Profit Loss'].value;
 			
 
-
-
-
 			// Assumption Validation
-			// Not using assumption variables (e.g. initial, sales...etc) to separate "0" and "empty boxes"
-			// Validation should recognize when users input 0 on purpose
-			/*var requiredArray  = [document.forms['keyfactors'].elements['Initial Investment'].value.split(",").join(""),
-								document.forms['keyfactors'].elements['Cost of Capital'].value.split(",").join(""), 
-								document.forms['keyfactors'].elements['Investment Term'].value.split(",").join(""), 
-								document.forms['keyfactors'].elements['Corporate Tax Rate'].value.split(",").join(""),  
-								document.forms['cashflows'].elements['Sales'].value.split(",").join(""), 
-								document.forms['cashflows'].elements['Cost'].value.split(",").join("")];*/
 
-			/*var requiredArray = [initial, costOfCapital, investmentTerm, corporateTax, 
-								sales, cost, depreciation, residualValue, profitLoss];
-
-			var positiveArray = [initial, costOfCapital, investmentTerm, corporateTax, 
-								sales, cost, depreciation];*/
-
-
+			// Sorry for this ugly code, but this is to avoid "Aw snap" brower error
 			function validation(){
-				if(typeof initial === "number" && initial > 0){
-					if(typeof costOfCapital === "number" && costOfCapital > 0){
-						if(typeof investmentTerm === "number" && investmentTerm > 0){
-							if(typeof corporateTax === "number" && corporateTax > 0){
-								if(typeof sales === "number" && sales > 0){
-									if(typeof cost === "number" && cost > 0){
-										if(typeof depreciation === "number" && depreciation > 0){
-											if(typeof residualValue === "number" && residualValue > 0){
-												if(typeof profitLoss === "number"){
+				if(initialVal !== "" && typeof initial === "number" && initial > 0){
+					if(costOfCapitalVal !== "" && typeof costOfCapital === "number" && costOfCapital > 0){
+						if(investmentTermVal !== "" && typeof investmentTerm === "number" && investmentTerm > 0){
+							if(corporateTaxVal !== "" && typeof corporateTax === "number" && corporateTax > 0){
+								if(salesVal !== "" && typeof sales === "number" && sales > 0){
+									if(costVal !== "" && typeof cost === "number" && cost > 0){
+										if(depreciationVal !== "" && typeof depreciation === "number" && depreciation > 0){
+											if(residualValueVal !== "" && typeof residualValue === "number" && residualValue > 0){
+												if(profitLossVal !== "" && typeof profitLoss === "number"){
 													return true;
 												}else{
 													return false;
@@ -125,49 +119,8 @@ function run(){
 					return false;
 				}
 			}
-
-
-			/*function validation(){
-				for(var i = 0; i < requiredArray.length; i++){
-					if((typeof requiredArray[i]) === "number"){
-							return true;
-					}
-				}
-
-				for(var i = 0; i < positiveArray.length; i++){
-					if(positiveArray[i] >= 0){
-						return true;
-					}
-				}
-				return false;
-			}*/
-
 			
-			//文字が入っていた場合に動かなくなる...
-
-			/*function validation(){
-				for(var i = 0; i < requiredArray.length; i++){
-					if((requiredArray[i] !== 0) && !requiredArray[i]){
-							console.log("requiredArray false");
-							return false;
-					}
-				}
-
-				for(var i = 0; i < positiveArray.length; i++){
-					if(positiveArray[i] < 0){
-						console.log("positiveArray false");
-						return false;
-					}
-				}
-				return true;
-			}*/
-
-
 			var validationBoolean = validation();
-			console.log(validationBoolean);
-
-
-
 
 
 
@@ -242,6 +195,7 @@ function run(){
 			*/
 
 			function IRR(){
+				
 				// Assign values to variables "irr" and "irrNPV" as a calculation starting point 
 				var irr = costOfCapital;
 				var irrNPV = npv;
@@ -296,13 +250,21 @@ function run(){
 				* For example, Last => {rate: 0.09, rateNPV: 100} Second-to-Last => {rate: 0.10, rateNPV: -100}
 				* rateNPV zero (=IRR) is between 0.09 and 0.10.
 				*/
-				var lastObj = array.pop();
-				var secondLastObj = array.pop();
+				
+				if(array.length > 1){
+					var lastObj = array.pop();
+					var secondLastObj = array.pop();
 
-				// Calculate a remainder of the ratio (eg. 100 / (100 - (-100)) => 0.095(9.5%) for the example above)
-				irr = secondLastObj['rate'] * 100 + secondLastObj['rateNPV'] / (secondLastObj['rateNPV'] - lastObj['rateNPV']);
-				irr = Math.round(irr * 100) / 100;
-				return irr;
+					// Calculate a remainder of the ratio (eg. 100 / (100 - (-100)) => 0.095(9.5%) for the example above)
+					irr = secondLastObj['rate'] * 100 + secondLastObj['rateNPV'] / (secondLastObj['rateNPV'] - lastObj['rateNPV']);
+					irr = Math.round(irr * 100) / 100;
+					return irr;
+				}else{
+					var lastObj = array.pop();
+					irr = lastObj['rateNPV'];
+					irr = Math.round(irr * 100) / 100;
+					return irr;
+				}
 			}
 
 
@@ -344,7 +306,7 @@ function run(){
 				document.forms['calculation'].elements['Profitability Index'].value = profitIndex();
 				document.forms['calculation'].elements['Internal Rate of Return'].value = IRR();
 
-				// Declare irr variable here because to avoid null
+				// Declare irr variable here to avoid null
 				var irr = document.forms['calculation'].elements['Internal Rate of Return'].value;
 
 				// Document.getElementsByClassName returns an array-like object(NodeList)
@@ -563,12 +525,6 @@ function run(){
 					}
 				});
 
-				// Result presentation to the HTML
-				/*for(var i = 0; i < document.getElementsByTagName('td').length; i++){
-					var el = document.getElementsByTagName('td')[i];
-					el.innerHTML = avgVsMedian(industryData[i]);
-				}*/
-
 			}else{
 				alert('Error returned from the server');
 			}
@@ -619,7 +575,4 @@ if(document.readyState !== 'loading'){
 		}
 	});
 }
-
-
-
 
