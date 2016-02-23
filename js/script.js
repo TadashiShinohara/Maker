@@ -25,6 +25,7 @@ function run(){
 
 			// Place assumptions to variables
 			// Use Number and parseXXX methods for type casting
+			// XXXVal variables are for validation only
 			
 			// Key Factors
 
@@ -120,8 +121,6 @@ function run(){
 			}
 
 			var validationBoolean = validation();
-
-
 
 
 
@@ -265,14 +264,6 @@ function run(){
 					irr = Math.round(irr * 100) / 100;
 					return irr;
 				}
-
-				/*var lastObj = array.pop();
-				var secondLastObj = array.pop();
-
-				// Calculate a remainder of the ratio (eg. 100 / (100 - (-100)) => 0.095(9.5%) for the example above)
-				irr = secondLastObj['rate'] * 100 + secondLastObj['rateNPV'] / (secondLastObj['rateNPV'] - lastObj['rateNPV']);
-				irr = Math.round(irr * 100) / 100;
-				return irr;*/
 			}
 
 
