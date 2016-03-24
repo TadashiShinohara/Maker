@@ -1,207 +1,281 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Maker</title>
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/style1.css" />
+		<link rel="stylesheet" type="text/css" href="css/style2.css" />
+	</head>
+	
+	<body>
+		<nav class="top-navigation">
+    		<div class="content1">
+      		<p><a href="./index.html">Maker</a></p>
+    		</div>
+  		</nav>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Maker</title>
-  <link href = 'http://fonts.googleapis.com/css?family=Roboto:400,500,300' rel = 'stylesheet' type = 'text/css'>
-  <link href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel = "stylesheet">
-  <link rel = "stylesheet" href = "css/normalize.css">
-  <link rel = "stylesheet" href = "css/style2.css">
-  <link rel = "prev" href = "./index.html">
-</head>
+		<header class="masthead">
+		   <p class="masthead-intro">Maker</p>
+		   <h1 class="masthead-heading">The Decision Making Tool for Capital Investments</h1>
+		</header>
 
-<body>
-  <nav class = "top-navigation">
-    <div class = "content1">
-      <p><a href = "./index.html">Maker</a></p>
-    </div>
-  </nav>
+		<div class="container">
+			<section class="content">
+				<h2>Assumptions</h2>
+				<div class="explanation">
+		          <h3>Tips</h3>
+		          <p>
+			          <b>Initial Invetment</b> - An initial purchase amount of new capital investments.<br><br>
+			          <b>Cost of Capital</b> - How much (8%, 10% etc...) do creditors and investors expect from new investments? (eg. after-tax interest rates on borrowings/investors' expected return) If you're not sure about the Cost of Capital of your investment, check the expected return by industries.<br><br>
+				  </p>
+				    <div id="industry_return">
+				      <h4>Expected Return(%) by Industries<sup>*</sup></h4>
+					      <table class="style">
+					        <tr>
+					          <th>Consumer Non-Durables</th><th>Consumer Durables</th><th>Manufacturing</th><th>Energy</th><th>Technology</th>
+					        </tr>
+					        <tr>
+					          <td></td><td></td><td></td><td></td><td></td>
+					        </tr>
+					        <tr>
+					          <th>Telecom</th><th>Retail</th><th>Healthcare</th><th>Utilities</th><th>Other</th>
+					        </tr>
+					        <tr>
+					          <td></td><td></td><td></td><td></td><td></td>
+					        </tr>
+					      </table>
+				      <p><sup>*</sup>2005 to 2015 annual average</p>
+				    </div>
+		          <p>
+			          <b>Investment Term</b> - How long do new capital investments generate economic benefits? 5 years? 10 years?<br><br>
+			          <b>Corporate Tax Rate</b> - About 40% in the U.S.
+		          </p>
+		      </div>
+		        <div class="content-content">
+				<h3>Key Factors</h3>
+				 <form method="POST" action ="js/script.js" name="keyfactors">
+					<div>
+					<span class="input input--magic">
+						<input class="input__field input__field--magic" type="text" id="input-10" />
+						<label class="input__label input__label--magic" for="input-10">
+							<span class="input__label-content input__label-content--magic" name="Initial Investment" data-content="Initial Investment (in USD)">Initial Investment (in USD)</span>
+						</label>
+					</span>
+					</div>
+					<div>
+					<span class="input input--magic">
+						<input class="input__field input__field--magic" type="text" id="input-11" />
+						<label class="input__label input__label--magic" for="input-11">
+							<span class="input__label-content input__label-content--magic" data-content="Cost of Capital (%)">Cost of Capital (%)</span>
+						</label>
+					</span>
+					</div>
+					<div>
+					<span class="input input--magic">
+						<input class="input__field input__field--magic" type="text" id="input-12" />
+						<label class="input__label input__label--magic" for="input-12">
+							<span class="input__label-content input__label-content--magic" data-content="Investment Term (in years)">Investment Term (in years)</span>
+						</label>
+					</span>
+					</div>
+					<div>
+					<span class="input input--magic">
+						<input class="input__field input__field--magic" type="text" id="input-13" />
+						<label class="input__label input__label--magic" for="input-13">
+							<span class="input__label-content input__label-content--magic" data-content="Corporate Tax Rate (%)">Corporate Tax Rate (%)</span>
+						</label>
+					</span>
+					</div>
+					<div>
+					<span class="input input--magic">
+						<input class="input__field input__field--magic" type="reset" value="Key Factor Reset" id="input-14" />
+						<label class="input__label input__label--magic" for="input-14">
+							<span class="input__label-content input__label-content--magic"></span>
+						</label>
+					</span>
+					</div>
+				</form>
+				</div>
+			</section>
 
-  <header class = "masthead">
-    <p class = "masthead-intro">Maker</p>
-    <h1 class = "masthead-heading">The Decision Making Tool for Capital Investments</h1>
-  </header>
+			<div class="clear"></div>
 
-  <section class = "section">
-    <div id = "industry_return">
-      <h4>Expected Return(%) by Industries<sup>*</sup></h4>
-      <table class = "style">
-        <tr>
-          <th>Consumer Non-Durables</th><th>Consumer Durables</th><th>Manufacturing</th><th>Energy</th><th>Technology</th>
-        </tr>
-        <tr>
-          <td></td><td></td><td></td><td></td><td></td>
-        </tr>
-        <tr>
-          <th>Telecom</th><th>Retail</th><th>Healthcare</th><th>Utilities</th><th>Other</th>
-        </tr>
-        <tr>
-          <td></td><td></td><td></td><td></td><td></td>
-        </tr>
-      </table>
-      <p><sup>*</sup>2005 to 2015 annual average</p>
-    </div>
-  </section>
-  
-  <section class = "section">
-    <h1>Assumptions</h1>
-      <div id = "keyfactors">
-        <h2>Key Factors <font color = "#E83030" size = "3">(User Input Required)</font></h2>
-        <div id = "explanation1">
-          <h3>Tips</h3>
-          <p>
-          Initial Invetment - An initial purchase amount of new capital investments.<br><br>
-          Cost of Capital - How much (8%, 10% etc...) do creditors and investors expect from new investments? (eg. after-tax interest rates on borrowings/investors' expected return) If you're not sure about the Cost of Capital of your investment, check the expected return by industries. (Click the box!) <br><br>
-          Investment Term - How long do new capital investments generate economic benefits? 5 years? 10 years?<br><br>
-          Corporate Tax Rate - about 40% in the U.S.<br><br>
-          Method of Depreciation - Right now, Straight-Line Depreciation is the only method for the app.
-          </p>
-        </div>
-          <form method = "POST" action = "js/script.js" name = "keyfactors">
-            <fieldset name = "keyfactors">
-              <p>
-                <label for = "initial">Initial Investment (in USD) </lable><input id = "initial" type = "text" name = "Initial Investment"> (e.g. 10000)
-              </p>
-              <p>
-                <label for = "costOfCapital">Cost of Capital (%) </lable><input id = "costOfCapital" type = "text" name = "Cost of Capital"> %
-              </p>
-              <p>
-                <label for = "investmentTerm">Investment Term (in years) </label><input id = "investmentTerm" type = "text" name = "Investment Term"> year(s)
-              </p>
-              <p>
-                <label for = "corporateTaxRate">Corporate Tax Rate (%) </lable><input id = "corporateTaxRate" type = "text" name = "Corporate Tax Rate"> %
-              </p>
-              <p>
-                <label for = "methodOfDepreciation">Method of Depreciation </label><input id = "methodOfDepreciation" type = "radio" name = "Method of Depreciation" value = "Straight-Line" checked>Straight-Line
-              </p>
-              <br>
-              <p>
-                <input type = "reset" value = "Reset" class = "button">
-              </p>
-            </fieldset>
-          </form>
-      </div>
-      
-      <div id = "cashflows">
-        <h2>Annual Cash Flows - Before Tax <font color = "#E83030" size = "3">(User Input Required)</font></h2>
-        <div id = "explanation2">
-          <h3>Tips</h3>
-          <p>
-            Sales/Cost - How much do sales and cost increase ANNUALLY from the new capital investments? For example, you purchase a $1,000,000 machine, and the machine increases annual Sales and Cost by $500,000 and $100,000, respectively. Then, please input 500000 and 100000.<br><br>
-            Depreciation - ANNUAL depreciation expense from new capital investments<br><br>
-            Residual Value - Cash value on disposal<br><br>
-            Profit/Loss = Initial Amount - (Accumulated Depreciation + Residual Value)<br>
-            Profit -(Cash Outflow), Loss +(Cash Inflow)
-          </p>
-        </div>
-          <form method = "POST" action = "js/script.js" name = "cashflows">
-            <fieldset name = "Cash Flows Before Tax">
-              <p>
-                <label for = "sales">Sales (in USD) </lable><input id = "sales" type = "text" name = "Sales"> (e.g. 6000)
-              </p>
-              <p>
-                <label for = "cost">Cost (in USD) </label><input id = "cost" type = "text" name = "Cost"> (e.g. 1000)
-              </p>
-              <p>
-                <label for = "depreciation">Depreciation (in USD) </label><input id = "depreciation" type = "text" name = "Depreciation"> (e.g. 1000)
-              </p>
-              <p>
-                <label for = "residualValue">Residual Value (in USD) </lable><input id = "residualValue" type = "text" name = "Residual Value"> (e.g. 1000)
-              </p>
-              <p>
-                <label for = "profitLoss">Profit/Loss on Assets Sales (in USD) </label><input id = "profitLoss" type = "text" name = "Profit Loss"> (e.g. -500)
-              </p>
-              <br>
-              <p>
-                 <input type = "reset" value = "Reset" class = "button">
-               </p>
-            </fieldset>
-          </form>
-      </div>
-  </section>
+			<section class="content">
+				<div class="explanation">
+		          <h3>Tips</h3>
+		          <p>
+		            <b>Sales/Cost</b> - How much do sales and cost increase ANNUALLY from the new capital investments? For example, you purchase a $1,000,000 machine, and the machine increases annual Sales and Cost by $500,000 and $100,000, respectively. Then, please input 500000 and 100000.<br><br>
+		            <b>Depreciation</b> - ANNUAL depreciation expense from new capital investments. Method of Depreciation - Right now, Straight-Line Depreciation is the only method for the app.<br><br>
+		            <b>Residual Value</b> - Cash value on disposal<br><br>
+		            <b>Profit/Loss</b> = Initial Amount - (Accumulated Depreciation + Residual Value)<br>
+		            Profit -(Cash Outflow), Loss +(Cash Inflow)
+		          </p>
+        		</div>
+        		<div class="content-content">
+        		<h3>Annual Cash Flows - Before Tax</h3>
+				<form method="POST" action="js/script.js" name="cashflows">
+					<div>
+					<span class="input input--magic">
+						<input class="input__field input__field--magic" type="text" id="input-15" />
+						<label class="input__label input__label--magic" for="input-15">
+							<span class="input__label-content input__label-content--magic" data-content="Sales (in USD)">Sales (in USD)</span>
+						</label>
+					</span>
+					</div>
+					<div>
+					<span class="input input--magic">
+						<input class="input__field input__field--magic" type="text" id="input-16" />
+						<label class="input__label input__label--magic" for="input-16">
+							<span class="input__label-content input__label-content--magic" data-content="Cost (in USD)">Cost (in USD)</span>
+						</label>
+					</span>
+					</div>
+					<div>
+					<span class="input input--magic">
+						<input class="input__field input__field--magic" type="text" id="input-17" />
+						<label class="input__label input__label--magic" for="input-17">
+							<span class="input__label-content input__label-content--magic" data-content="Depreciation (in USD)">Depreciation (in USD)</span>
+						</label>
+					</span>
+					</div>
+					<div>
+					<span class="input input--magic">
+						<input class="input__field input__field--magic" type="text" id="input-18" />
+						<label class="input__label input__label--magic" for="input-18">
+							<span class="input__label-content input__label-content--magic" data-content="Residual Value (in USD)">Residual Value (in USD)</span>
+						</label>
+					</span>
+					</div>
+					<div>
+					<span class="input input--magic">
+						<input class="input__field input__field--magic" type="text" id="input-19" />
+						<label class="input__label input__label--magic" for="input-19">
+							<span class="input__label-content input__label-content--magic" data-content="Profit/Loss (in USD)">Profit/Loss (in USD)</span>
+						</label>
+					</span>
+					</div>
+					<div>
+					<span class="input input--magic">
+						<input class="input__field input__field--magic" type="reset" value="Cash Flow Reset" />
+						<label class="input__label input__label--magic">
+							<span class="input__label-content input__label-content--magic"></span>
+						</label>
+					</span>
+					</div>
+				</form>
+				</div>
+			</section>
 
-  <section class = "section">
-    <div class = "calcButton">
-      <button class = "button" id = "calc">Calculation</button>
-    </div>
-    <div id = "errorDiv">
-         <p>
-          <b>Check your assumption inputs again. Thanks!</b><br>
-          <b><font color = "#E83030">Inputs must be positive and greater than 0 except for Profit/Loss on Assets Sales.</font></b>
-        </p>
-    </div>
-  </section>
+			<div class="clear"></div>
 
-  <section class = "section">
-    <div id = "calculation">
-      <h1>Calculation Results</h1>
-        <div id = "explanation3">
-          <h3>Tips</h3>
-          <p>
-            Net Present Value = <br>
-            Discounted Cash Flows - Initial Amount<br>
-            It should be positive for a good investment. If it's negative, you're losing money!<br><br>
-            Profitabiliy Index = Discounted Cash Flows / Initial Amount<br><br>
-            IRR - Greater than the Cost of Capital? Then, it's worth it!
-          </p>
-        </div>
-      <form name = "calculation">
-        <fieldset name = "Calculation">
-          <p>
-            <label for = "netPresentValue">Net Present Value (in USD) </label><input id = "netPresentValue" type = "text" class = "money" name = "Net Present Value">
-          </p>
-          <p>
-            <label for = "profitabilityIndex">Profitability Index </label><input id = "profitabilityIndex" type = "text" name = "Profitability Index">
-          </p>
-          <p>
-            <label for = "IIR">Internal Rate of Return (%) </label><input id = "IIR" type = "text" name = "Internal Rate of Return"> %
-          </p>
-        </fieldset>
-      </form>
-    </div>
-  </section>
+			<section class="content">
+				<h2>Calculation</h2>
+					<button class="button-design" id="calc">Calculation</button>
+    			<div id="errorDiv">
+         			<h4>Check your assumption inputs again!</h4>
+         			<p>
+			          <b>Key Factors</b> (Initial Investment, Cost of Capital etc.) - Must be number and GREATER THAN ZERO.<br><br>
+					  <b>Cash Flows</b> (Sales, Cost etc.) EXCEPT FOR Profit/Loss - Must be number and EQUAL TO or GREATER THAN ZERO. Input 0 if you don't have the numbers.<br> Profit/Loss can be either positive or negative.
+			        </p>
+    			</div>
+    		</section>
+			
+			<div class="clear"></div>
 
-  <section class = "section">
-    <h1>Decision Maker</h1>
-      <div class = "boxResult">
-        <div class = "boxResult1">
-          <div class = "result">Result</div>
-          <div class = "go">Go</div>
-          <div class = "nogo">No Go</div>
-        </div>
-        <div class = "boxResult2">
-          <div class = "comments">Comments</div>
-          <div class = "go-comments">
-            <h2>Go</h2>
-            <p>Your capital investment looks great. Net Present Value looks good, Profitability Index looks good, and IRR is greater than Cost of Capital. Just go for it!</p>
-          </div>
-          <div class = "nogo-comments">
-            <h2>No Go</h2>
-            <p>Your capital investment doesn't look good. Isn't the purchase amount too high? Does the new investment really improve your cash flows? Or do sales increase enough? Please reconsider it and conduct further investigation for the implementation of the new capital investment.</p>
-          </div>
-        </div>
-      </div>
-  </section>
-  <section class = "section">
-    <div class = "calcButton">
-      <button class = "button" id = "reload">Try again</button>
-    </div>
-  </section>
+			<section class="content">
+				<h2>Calculation Results</h2>
+				<div class="explanation">
+		          <h3>Tips</h3>
+		          <p>
+		            <b>Net Present Value</b> = <br>
+		            Discounted Cash Flows - Initial Amount<br>
+		            It should be positive for a good investment. If it's negative, you're losing money!<br><br>
+		            <b>Profitabiliy Index</b> = Discounted Cash Flows / Initial Amount<br>*N/A will be shown if there's no cash flow.<br><br>
+		            <b>IRR</b> - Greater than the Cost of Capital? Then, it's worth it!<br>*N/A will be shown if there's no cash flow.
+		          </p>
+       			</div>
+				<div class="content-content">
+				<h3>Indicators</h3>
+				<div>
+				<span class="input input--indicator">
+					<input class="input__field input__field--indicator" type="text" id="input-20" />
+					<label class="input__label input__label--indicator" for="input-20">NET PRESENT VALUE (IN USD)
+					</label>
+				</span>
+				</div>
+				<div>
+				<span class="input input--magic">
+					<input class="input__field input__field--indicator" type="text" id="input-21" />
+					<label class="input__label input__label--indicator" for="input-21">PROFITABILITY INDEX
+					</label>
+				</span>
+				</div>
+				<div>
+				<span class="input input--magic">
+					<input class="input__field input__field--indicator" type="text" id="input-22" />
+					<label class="input__label input__label--indicator" for="input-22">INTERNAL RATE OF RETURN (%)
+					</label>
+				</span>
+				</div>
+				</div>
+			</section>
+			
+			<div class="clear"></div>
 
-  <footer class = "content-footer">
-    <p>Say hi to me on GitHub!</p>
-      <ul class = "social">
-        <li>
-          <i class = "fa fa-github"></i>
-          <a href = "https://github.com/TadashiShinohara">GitHub</a>
-        </li>
-      </ul>
-    <p>Cover Image via Unsplash <a href = "http://unsplash.com">Unsplash</a></p>
-  </footer>
+			<section class="content decision--maker">
+				<h2>Decision Maker</h2>
+				
+				<div class="result">
+				<h4>Result</h4>
+				</div>
+				<div class="result go">
+				<h4>Go</h4>
+				</div>
+				<div class="result nogo">
+				<h4>No Go</h4>
+				</div>
+				
+				<div class="comment">
+				<h4>Comment</h4>
+				</div>
+				<div class="comment go">
+				<h4>Go</h4>
+					<p>Your capital investment looks great. Net Present Value looks good, Profitability Index looks good, and IRR is greater than Cost of Capital. Just go for it!</p>
+				</div>
+				<div class="comment nogo">
+				<h4>No Go</h4>
+					<p>Your capital investment doesn't look good. Isn't the purchase amount too high? Does the new investment really improve your cash flows? Or do sales increase enough? Please reconsider it and conduct further investigation for the implementation of the new capital investment.</p>
+				</div>
 
-  <script src = "js/script.js"></script>
+			<div class="clear"></div>				
 
-</body>
+			</section>
 
+			<section class="content">
+				<h2>Start Again</h2>
+				<div>
+					<button class="button-design" id="reload">All Reset</button>
+				</div>
+			</section>
+		</div><!-- /container -->
+		
+		
+
+		<footer class="content-footer">
+		    <p>Say hi to me on GitHub!</p>
+		      <ul class="social">
+		        <li>
+		          <i class="fa fa-github"></i>
+		          <a href="https://github.com/TadashiShinohara">GitHub</a>
+		        </li>
+		      </ul>
+		    <p>Cover Image via Unsplash <a href="http://unsplash.com">Unsplash</a></p>
+  		</footer>
+
+		<script src="js/classie.js"></script>
+		<script src="js/script.js"></script>
+		
+	</body>
 </html>
