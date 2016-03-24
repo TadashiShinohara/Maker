@@ -1,50 +1,29 @@
 function run(){
-	
+
 	if(document.getElementById('calc') !== null){
 
 		document.getElementById('calc').onclick = function(){
 
 			// Value reset for re-calculation
-			document.forms['calculation'].elements['Net Present Value'].value = "";
-			document.forms['calculation'].elements['Profitability Index'].value = "";
-			document.forms['calculation'].elements['Internal Rate of Return'].value = "";
-
-
-			// Hide the error message for re-calculation
-			hide(document.getElementById('errorDiv'));
-			
-			// Reset the comments for re-calculation
-			show(document.getElementsByClassName('result')[0]);
-			show(document.getElementsByClassName('comments')[0]);
-			hide(document.getElementsByClassName('go')[0]);
-			hide(document.getElementsByClassName('go-comments')[0]);
-			hide(document.getElementsByClassName('nogo')[0]);
-			hide(document.getElementsByClassName('nogo-comments')[0]);
-
+			reset();
 
 
 			// Place assumptions to variables
 			// Use Number and parseXXX methods for type casting
-			// XXXVal variables are for validation only
 			
 			// Key Factors
 
 			// 1. Initial Investment
-			// Eliminate commas when users input them => split(",").join("")
-			var initial = Number(document.forms['keyfactors'].elements['Initial Investment'].value.split(",").join(""));
-			var initialVal = document.forms['keyfactors'].elements['Initial Investment'].value;
+			var initial = Number(initializer(document.getElementById('input-10')));
 			
 			// 2. Cost of Capital
-			var costOfCapital = parseFloat(document.forms['keyfactors'].elements['Cost of Capital'].value.split(",").join("") / 100);
-			var costOfCapitalVal = document.forms['keyfactors'].elements['Cost of Capital'].value;
+			var costOfCapital = parseFloat(initializer(document.getElementById('input-11')) / 100);
 			
 			// 3. Investment Term(Year)
-			var investmentTerm = Number(document.forms['keyfactors'].elements['Investment Term'].value.split(",").join(""));
-			var investmentTermVal = document.forms['keyfactors'].elements['Investment Term'].value;
+			var investmentTerm = Number(initializer(document.getElementById('input-12')));
 			
 			// 4. Coporate Tax Rate
-			var corporateTax = parseFloat(document.forms['keyfactors'].elements['Corporate Tax Rate'].value.split(",").join("") / 100);
-			var corporateTaxVal = document.forms['keyfactors'].elements['Corporate Tax Rate'].value;
+			var corporateTax = parseFloat(initializer(document.getElementById('input-13')) / 100);
 			
 			// 5. Method of Depreciation => Straight-Line
 
@@ -54,72 +33,23 @@ function run(){
 			
 			// 1, 2. Sales and Cost(Annual Economic Effect)
 			// Place "after-tax" calculation results
-			var sales = Number(document.forms['cashflows'].elements['Sales'].value.split(",").join("") * (1 - corporateTax));
-			var salesVal = document.forms['cashflows'].elements['Sales'].value;
+			var sales = Number(initializer(document.getElementById('input-15')) * (1 - corporateTax));
 			
-			var cost = Number(document.forms['cashflows'].elements['Cost'].value.split(",").join("") * (1 - corporateTax));
-			var costVal = document.forms['cashflows'].elements['Cost'].value;
-
+			var cost = Number(initializer(document.getElementById('input-16')) * (1 - corporateTax));
+			
 			// 3. Annual Tax Shield from Depreciation(Non-monetary item)
 			// Tax Shield calculation = Profit/Loss(Expenses) * Tax Rate
-			var depreciation = Number(document.forms['cashflows'].elements['Depreciation'].value.split(",").join("") * corporateTax);
-			var depreciationVal = document.forms['cashflows'].elements['Depreciation'].value;
+			var depreciation = Number(initializer(document.getElementById('input-17')) * corporateTax);
 			
 			// 4. Residual Value => Cash equivalent value on disposal
 			// No tax effect occurs due to the nature of transactions (simply in exchange of disposal assets)
-			var residualValue = Number(document.forms['cashflows'].elements['Residual Value'].value.split(",").join(""));
-			var residualValueVal = document.forms['cashflows'].elements['Residual Value'].value;
+			var residualValue = Number(initializer(document.getElementById('input-18')));
 			
 			// 5. Tax Shield from Profit/Loss on Assets Sales(Non-monetary item)
 			// Tax Shield calculation = Profit/Loss(Expenses) * Tax Rate
 			// Profit => -(Cash OutFlow), Loss => +(Cash InFlow)
-			var profitLoss = Number(document.forms['cashflows'].elements['Profit Loss'].value.split(",").join("") * corporateTax);
-			var profitLossVal = document.forms['cashflows'].elements['Profit Loss'].value;
+			var profitLoss = Number(initializer(document.getElementById('input-19')) * corporateTax);
 			
-
-			// Assumption Validation
-
-			// Sorry for this ugly code, but this is to avoid "Aw snap" brower error
-			function validation(){
-				if(initialVal !== "" && typeof initial === "number" && initial > 0){
-					if(costOfCapitalVal !== "" && typeof costOfCapital === "number" && costOfCapital > 0){
-						if(investmentTermVal !== "" && typeof investmentTerm === "number" && investmentTerm > 0){
-							if(corporateTaxVal !== "" && typeof corporateTax === "number" && corporateTax > 0){
-								if(salesVal !== "" && typeof sales === "number" && sales > 0){
-									if(costVal !== "" && typeof cost === "number" && cost > 0){
-										if(depreciationVal !== "" && typeof depreciation === "number" && depreciation > 0){
-											if(residualValueVal !== "" && typeof residualValue === "number" && residualValue > 0){
-												if(profitLossVal !== "" && typeof profitLoss === "number"){
-													return true;
-												}else{
-													return false;
-												}
-											}else{
-												return false;
-											}
-										}else{
-											return false;
-										}
-									}else{
-										return false;
-									}
-								}else{
-									return false;
-								}
-							}else{
-								return false;
-							}
-						}else{
-							return false;
-						}
-					}else{
-						return false;
-					}
-				}else{
-					return false;
-				}
-			}
-			var validationBoolean = validation();
 
 
 
@@ -132,59 +62,59 @@ function run(){
 			var termination = residualValue + profitLoss;
 
 
-			// Present Value variable declaration
-			var pv = 0;
-
-
 			// Function to calculate Present Value
 			// The function calculates discounted values by using 
 			// Cost of Capital and Invetment Periods
-			function pvCalc(){
+			function pvCalc(rate, term){
 				
+				// Present Value variable declaration
+				var pv = 0;
+
 				// Present Value from Annual Cash Flow
-				for(var i = 1; i <= investmentTerm; i++){
-					pv += annualCF * (1 / Math.pow(1 + costOfCapital, i));
+				for(var i = 1; i <= term; i++){
+					pv += annualCF * (1 / Math.pow(1 + rate, i));
 				}
 
 				// Present Value from Termination
-				pv += termination * (1 / Math.pow(1 + costOfCapital, investmentTerm));
+				pv += termination * (1 / Math.pow(1 + rate, term));
 
 				return pv;
 			}
 
-			pv = pvCalc();
-
-
-			// Net Present Value variable declaration
-			var npv = 0;
-
 
 			// Function to calculate Net Present Value
 			// NPV = PV - Initial
-			function netPresentValue(){
-				npv = Math.round(pv - initial);
+			function netPresentValue(rate, term, initialAmount){
+				
+				// Net Present Value variable declaration
+				var npv = 0;
+
+				var pvResult = pvCalc(rate, term);
+				
+				// Here, the pvResult is the present value of cash flows from the investment, 
+				// and if it's zero, the investment doesn't generate any cash flows. 
+				
+				npv = Math.round(pvResult - initialAmount);
 				return npv;
 			}
-
-			
-			// Profitability Index variable declaration
-			var pIndex = 0;
 
 
 			// Function to calculate Profitability Index
 			// PI = PV / Initial
-			function profitIndex(){
-				
+			function profitIndex(pv, initialAmount){
+
+				// Profitability Index variable declaration
+				var pIndex = 0;
+
 				// Move the floating point and then round the number
-				pIndex = Math.round((pv / initial) * 100) / 100;
+				pIndex = Math.round((pv / initialAmount) * 100) / 100;
 				
 				if(pIndex){
 					return pIndex;
 				}else{
-					return "N/A";
-				}
+					return 'N/A';
+				}	
 			}
-
 
 
 			// Internal Rate of Return Calculation
@@ -193,26 +123,27 @@ function run(){
 			* or investment equal zero.
 			*/
 
-			function IRR(){
+			function initialEstimate(){
 				
 				// Assign values to variables "irr" and "irrNPV" as a calculation starting point 
 				var irr = costOfCapital;
-				var irrNPV = npv;
+				var irrNPV = netPresentValue(costOfCapital, investmentTerm, initial);
+
 				
 				/** If irrNPV (equivalent to npv at this moment) is zero, 
 				* then that's the IRR that we want. 
 				* IRR = the interest rate for NPV being zero
 				*/
-				if(validationBoolean){
-					if(irrNPV === 0){
-						return Math.round(irr * 100) / 100;
-					}else{
-						return irrCalc(irrNPV, irr);
-					}
+				if(irrNPV === 0){
+					return Math.round(irr * 100) / 100;
+				}else{
+					return irrCalc(irr, investmentTerm, irrNPV);
 				}
+
 			}
+
 				
-			function irrCalc(irrNPV, irr){
+			function irrCalc(irr, term, irrNPV){
 				var array = [];
 				var rateNPV = irrNPV;
 				
@@ -220,113 +151,136 @@ function run(){
 				// irrNPV > 0 means irr is greater than the current rate
 				// Else if for two cases (irrNPV > 0 or not)
 				if(irrNPV > 0){
-					for(var i = 0; ; i++, irr += 0.01){
+					for(var i = 0; ; i++){
 						
+						irr += 0.01;
+
 						// Calculate NPV by the adjusted IRR
-						rateNPV = irrNPVCalc(irr);
+						rateNPV = netPresentValue(irr, term, initial);
 
 						// Place the adjusted IRR and NPV combination as a pair-value object in the array
 						array[i] = {rate: irr, 
 									rateNPV: rateNPV };
-						
-						// Break the else if when the NPV is equal to or less than zero
-						if(rateNPV <= 0){
-							break;
+
+						// If the present value from the cahs flows is zero, 
+						// IRR cannot be calculated because IRR is the interest rate at which 
+						// the present cash flows equal the initial amount. 
+
+						// So the present value is zero, the stack overflow will occur 
+						// since the initial amount remains the same and 
+						// (0 (PV) - initial (constant)) will be the same amount forever
+						// and will never get out of the loop. 
+
+						// Check first if rateNPV equals initial
+						// NPV = Cash Flow Present Value - Investment Initial Amount
+						// So if rateNPV equals initial, the cashflow present value is zero.
+						// In that case, the function returns 'N/A'. 
+
+						if(rateNPV === (-initial)){
+							return 'N/A'
+
+						// Break the loop if the NPV is equal to or less than zero
+						}else if(rateNPV <= 0){
+							return irrRateCalc(array);
 						}
 					}
 				}else{
-					for(var i = 0; ; i++, irr -= 0.01){
-						rateNPV = irrNPVCalc(irr);
+					for(var i = 0; ; i++){
+						
+						irr -= 0.01;
+
+						rateNPV = netPresentValue(irr, term, initial);
+						
 						array[i] = {rate: irr, 
 									rateNPV: rateNPV };
-						if(rateNPV >= 0){
-							break;
+
+						if(rateNPV === (-initial)){
+							return 'N/A';
+						
+						// Break the loop if the NPV is equal to or greater than zero
+						}else if(rateNPV >= 0){
+							return irrRateCalc(array);
 						}
 					}
 				}
+			}
 
+
+			function irrRateCalc(array){
+				
 				/** IRR is between last object's NPV and second-to-last one's.
-				* For example, Last => {rate: 0.09, rateNPV: 100} Second-to-Last => {rate: 0.10, rateNPV: -100}
+				* For example, Second-to-Last => {rate: 0.09, rateNPV: 100} Last => {rate: 0.10, rateNPV: -100}
 				* rateNPV zero (=IRR) is between 0.09 and 0.10.
 				*/
-				
-				if(array.length > 1){
-					var lastObj = array.pop();
-					var secondLastObj = array.pop();
 
-					// Calculate a remainder of the ratio (eg. 100 / (100 - (-100)) => 0.095(9.5%) for the example above)
-					irr = secondLastObj['rate'] * 100 + secondLastObj['rateNPV'] / (secondLastObj['rateNPV'] - lastObj['rateNPV']);
+
+				// No need to check the length of the array because the array length is two or more
+				var lastObj = array.pop();
+				var secondLastObj = array.pop();
+
+				var irr = 0;
+
+				if(lastObj.rate > secondLastObj.rate){
+					
+					/** For example, Second-to-Last => {rate: 0.09, rateNPV: 100} Last => {rate: 0.10, rateNPV: -100}
+					* rateNPV zero (=IRR) is between 0.09 and 0.10.
+					*/
+
+					// Calculate a remainder of the ratio (eg. 0.09 * 100 + 100 / (100 - (-100)) => 9.5 for the example above)
+					irr = secondLastObj.rate * 100 + secondLastObj.rateNPV / (secondLastObj.rateNPV - lastObj.rateNPV);
 					irr = Math.round(irr * 100) / 100;
 					return irr;
 				}else{
-					var lastObj = array.pop();
-					irr = lastObj['rateNPV'];
+
+					/** For example, Second-to-Last => {rate: 0.10, rateNPV: -100} Last => {rate: 0.09, rateNPV: 100}
+					* rateNPV zero (=IRR) is between 0.09 and 0.10.
+					*/
+
+					// Calculate a remainder of the ratio (eg. 0.09 * 100 + 100 / (100 - (-100)) => 9.5 for the example above)
+					irr = lastObj.rate * 100 + lastObj.rateNPV / (lastObj.rateNPV - secondLastObj.rateNPV);
 					irr = Math.round(irr * 100) / 100;
 					return irr;
 				}
 			}
 
 
-			function irrPVCalc(irr){
-				var irrPV = 0;
-				for(var i = 1; i <= investmentTerm; i++){
-					irrPV += annualCF * (1 / Math.pow(1 + irr, i));
-				}
-
-				//Present Value from Investment Termination
-				irrPV += termination * (1 / Math.pow(1 + irr, investmentTerm));
-				return irrPV;
-			}
-
-			function irrNPVCalc(irr){
-				var irrPVResult = irrPVCalc(irr);
-				irrNPV = Math.round(irrPVResult - initial);
-				return irrNPV;
-			}
-
-
-
-
-			// Effects functions (show, hide)
-			function show(el){
-				el.style.display = 'block';
-			}
-
-			function hide(el){
-				el.style.display = 'none';
-			}
 			
-			
+
+			var validationBoolean = validation(document.forms);
+
 			// Result Presentation to HTML
 			if(validationBoolean){
 				
-				// Assign NPV, PI and IRR values to each HTML element
-				document.forms['calculation'].elements['Net Present Value'].value = netPresentValue();
-				document.forms['calculation'].elements['Profitability Index'].value = profitIndex();
-				document.forms['calculation'].elements['Internal Rate of Return'].value = IRR();
+				var pv = pvCalc(costOfCapital, investmentTerm);
+				var npv = netPresentValue(costOfCapital, investmentTerm, initial);
+				var pIndex = profitIndex(pv, initial);
+				var irr = initialEstimate();
 
-				// Declare irr variable here to avoid null
-				var irr = document.forms['calculation'].elements['Internal Rate of Return'].value;
+				// Assign NPV, PI and IRR values to each HTML element
+				document.getElementById('input-20').value = npv;
+				document.getElementById('input-21').value = pIndex;
+				document.getElementById('input-22').value = irr;
 
 				// Document.getElementsByClassName returns an array-like object(NodeList)
 				// NPV > 0, PI > 1, IRR > Cost of Capital, then good to go. 
-				if(npv > 0){
-					if(pIndex > 1){
-						if(irr > costOfCapital){
-							hide(document.getElementsByClassName('result')[0]);
-							show(document.getElementsByClassName('go')[0]);
-							hide(document.getElementsByClassName('comments')[0]);
-							show(document.getElementsByClassName('go-comments')[0]);
-						}
-					}
-				}else{
+				if(npv > 0 && pIndex > 1 && irr > costOfCapital){
+					
 					hide(document.getElementsByClassName('result')[0]);
-					show(document.getElementsByClassName('nogo')[0]);
-					hide(document.getElementsByClassName('comments')[0]);
-					show(document.getElementsByClassName('nogo-comments')[0]);
+					show(document.getElementsByClassName('result go')[0]);
+					hide(document.getElementsByClassName('comment')[0]);
+					show(document.getElementsByClassName('comment go')[0]);
+
+				}else{
+					
+					hide(document.getElementsByClassName('result')[0]);
+					show(document.getElementsByClassName('result nogo')[0]);
+					hide(document.getElementsByClassName('comment')[0]);
+					show(document.getElementsByClassName('comment nogo')[0]);
+
 				}
 
 			}else{
+				
 				// To prompt users to check their inputs 
 				show(document.getElementById('errorDiv'));
 			}
@@ -335,78 +289,93 @@ function run(){
 	}
 
 
-	// Effects functions (fadeIn, fadeOut)
-	function fadeIn(elem, ms){
-  		if(!elem){
-  			return;
-  		}
-		 
-		 elem.style.opacity = 0;
-		 elem.style.filter = 'alpha(opacity=0)';
-		 elem.style.display = 'inline-block';
-		 elem.style.visibility = 'visible';
+	// Validation Function
+	function validation(obj){
+				
+		for(var i = 0; i < obj.length; i++){
 
-  		if(ms){
-    		var opacity = 0;
-    		var timer = setInterval(function(){
-      			opacity += 50 / ms;
-      			if(opacity >= 1){
-        			clearInterval(timer);
-        			opacity = 1;
-      			}
-		      	elem.style.opacity = opacity;
-		      	elem.style.filter = 'alpha(opacity=' + opacity * 100 + ')';
-    		}, 50 );
-	  		
-  		}else{
-		    elem.style.opacity = 1;
-		    elem.style.filter = 'alpha(opacity=1)';
-  		}
+			// Ignore the reset elements of the forms for validation
+			for(var j = 0; j < obj[i].length - 1; j++){
+						
+				// Blank check
+				if(obj[i][j].value.trim() === ''){
+					return false;
+				}
+
+				// NaN check
+				if(isNaN(Number(obj[i][j].value))){
+					return false;
+				}
+			}
+		}
+
+		// Key Factor must be greater than or equal to zero
+		for(var i = 0; i < obj[0].length - 1; i++){
+			if(Number(obj[0][i].value) <= 0){
+				return false;
+			}
+		}
+
+		// Cash Flows must be greater than zero except for Profit/Loss on Asset Sales
+		for(var i = 0; i < obj[1].length - 2; i++){
+			if(Number(obj[1][i].value) < 0){
+				return false;
+			}
+		}
+
+		return true;
 	}
-
-	function fadeOut(elem, ms){
-  		if(!elem){
-  			return;
-  		}
-  		
-  		if(ms){
-		    var opacity = 1;
-		    var timer = setInterval(function(){
-		    opacity -= 50 / ms;
-	      	if(opacity <= 0){
-		        clearInterval(timer);
-		        opacity = 0;
-		        elem.style.display = 'none';
-		        elem.style.visibility = 'hidden';
-	      	}
-			    elem.style.opacity = opacity;
-			    elem.style.filter = 'alpha(opacity=' + opacity * 100 + ')';
-	  	  	}, 50);
-	  	
-	  	}else{
-		    elem.style.opacity = 0;
-		    elem.style.filter = 'alpha(opacity=0)';
-		    elem.style.display = 'none';
-		    elem.style.visibility = 'hidden';
-	  	}
-	}
-
-
-	// Add fadeIn fadeOut effects to the Cost of Capital input box
-	if(document.getElementById('costOfCapital') !== null){
-		document.getElementById('costOfCapital').addEventListener('click', function(){
-			fadeIn(document.getElementById('industry_return'), 400);
-		});
-		document.getElementById('costOfCapital').addEventListener('mouseout', function(){
-			fadeOut(document.getElementById('industry_return'), 400);
-		});
-	}
-
-		
 	
-		// API Use
-		// 10 Industry Portfolios (Monthly) from Quandl.com
-		// 10 years data from 2005-08-31 to 2015-07-31
+
+	// Value reset for re-calculation
+	function reset(){
+
+		objEach(document.getElementsByClassName('input__field--indicator'), function(element){
+			element.value = '';
+		});
+
+		// Hide the error message for re-calculation
+		hide(document.getElementById('errorDiv'));
+			
+		// Reset the comments for re-calculation
+		show(document.getElementsByClassName('result')[0]);
+		show(document.getElementsByClassName('comment')[0]);
+		hide(document.getElementsByClassName('result go')[0]);
+		hide(document.getElementsByClassName('comment go')[0]);
+		hide(document.getElementsByClassName('result nogo')[0]);
+		hide(document.getElementsByClassName('comment nogo')[0]);
+	}
+
+
+
+	// Eliminate commas when users input them => split(",").join("")
+	function initializer(element){
+		return element.value.split(',').join('');
+	}
+	
+
+	function objEach(element, fn){
+		for(var i = 0; i < element.length; i++){
+			fn(element[i]);
+		}
+	}
+
+	// Effects Functions (show, hide)
+	function show(el){
+		el.style.display = 'block';
+	}
+
+	function hide(el){
+		el.style.display = 'none';
+	}
+	
+
+
+	// API Use
+	// 10 Industry Portfolios (Monthly) from Quandl.com
+	// 10 years data from 2005-08-31 to 2015-07-31
+	(function(){
+
 		var myurl = 'https://www.quandl.com/api/v3/datasets/KFRENCH/10_IND_PORTF_M.json?api_key=zygEkvv9GeTHH7Ep5M3y&start_date=2005-08-31';
 		var request = new XMLHttpRequest();
 		request.open('GET', myurl, true);
@@ -471,12 +440,12 @@ function run(){
 				// If a difference betwewen average and median is too big, take the median for the industry expected return
 				function avgVsMedian(arr){
 						
-						// Here, assuming the difference greater than 3% is too big
-						if(Math.abs(arr.average - arr.median) > 3){
-							return arr.median;
-						}else{
-							return arr.average;
-						}
+					// Here, assuming the difference greater than 3% is too big
+					if(Math.abs(arr.average - arr.median) > 3){
+						return arr.median;
+					}else{
+						return arr.average;
+					}
 				}
 
 				// Median calculation
@@ -508,6 +477,7 @@ function run(){
 
 					// Get 'td' tag object
 					var el = document.getElementsByTagName('td');
+
 					for(var i = 0; i < arr.length; i++){
 						
 						// Calculate Avg vs Median and invoke a function to present results
@@ -535,7 +505,7 @@ function run(){
 
 		request.send();
 
-
+	})();
 
 
 	// Add an addEventListener to "Try again" button
@@ -544,7 +514,45 @@ function run(){
 			window.location.reload();
 		});
 	}
-	
+
+
+	(function(){
+				
+		// trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+		if (!String.prototype.trim){
+			(function(){
+						
+				// Make sure we trim BOM and NBSP
+				var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+				String.prototype.trim = function() {
+					return this.replace(rtrim, '');
+				};
+			})();
+		}
+
+		[].slice.call(document.querySelectorAll('input.input__field')).forEach(function(inputEl){
+					
+			// in case the input is already filled..
+			if(inputEl.value.trim() !== ''){
+				classie.add(inputEl.parentNode, 'input--filled');
+			}
+
+			// events:
+			inputEl.addEventListener('focus', onInputFocus);
+			inputEl.addEventListener('blur', onInputBlur);
+		});
+
+		function onInputFocus(ev){
+			classie.add(ev.target.parentNode, 'input--filled');
+		}
+
+		function onInputBlur(ev){
+			if(ev.target.value.trim() === ''){
+				classie.remove(ev.target.parentNode, 'input--filled');
+			}
+		}
+	})();
+
 }
 
 
